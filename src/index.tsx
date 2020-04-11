@@ -3,29 +3,47 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {Circle} from './shapes/Circle';
 
-class App extends React.Component {
-    shapes = [];
+let shapes: any[] = [];
 
-    addShape() {
-        //this.shapes.push(new Circle(, , 50));
+//shapes.push(new Circle(60, 60, 50));
+
+function addShape(event: { clientX: number; clientY: number; }) {
+    shapes.push(new Circle(event.clientX, event.clientY, 50));
+}
+
+class App extends React.Component {
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            shapes,
+        };
     }
 
-    test = new Circle(60, 60, 50);
+    updateItems = () => {
+        this.setState(state => {
+            const shapes = state;
+            return {
+                shapes,
+            };
+        });
+    };
 
     render() {
         return (
-            <div>
+            <div onClick={this.updateItems}>
                 <div id="controls">
-
+                    <h1>{shapes.length}</h1>
                 </div>
-                <svg id="canvas" onClick={this.addShape}>
-                    {this.test.draw()}
+
+                <svg id="canvas" onClick={addShape}>
+                    {shapes.map(function (shape, i) {
+                        return (shapes[i].draw());
+                    })}
                 </svg>
             </div>
         );
     }
 }
-
 
 ReactDOM.render(
     <App/>,
