@@ -5,10 +5,10 @@ import {Circle} from './shapes/Circle';
 
 let shapes: any[] = [];
 
-//shapes.push(new Circle(60, 60, 50));
-
 function addShape(event: { clientX: number; clientY: number; }) {
-    shapes.push(new Circle(event.clientX, event.clientY, 50));
+    // @ts-ignore
+    let offset = document.getElementById("canvas").getBoundingClientRect();
+    shapes.push(new Circle(event.clientX - offset.left, event.clientY - offset.top, 50));
 }
 
 class App extends React.Component {
@@ -30,16 +30,17 @@ class App extends React.Component {
 
     render() {
         return (
-            <div onClick={this.updateItems}>
+            <div>
                 <div id="controls">
                     <h1>{shapes.length}</h1>
                 </div>
-
-                <svg id="canvas" onClick={addShape}>
-                    {shapes.map(function (shape, i) {
-                        return (shapes[i].draw());
-                    })}
-                </svg>
+                <div onClick={this.updateItems}>
+                    <svg id="canvas" onClick={addShape}>
+                        {shapes.map(function (shape, i) {
+                            return (shapes[i].draw());
+                        })}
+                    </svg>
+                </div>
             </div>
         );
     }
