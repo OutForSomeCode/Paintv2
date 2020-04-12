@@ -12,7 +12,7 @@ function addShape(event: { clientX: number; clientY: number; }) {
         stroke: "black",
         fill: "#cccccc"
     }
-    shapes.push(new Shape(Controls.type, event.clientX - offset.left, event.clientY - offset.top, 60, 40, styling));
+    shapes.push(new Shape(Controls.type, event.clientX - offset.left, event.clientY - offset.top, Controls.width, Controls.height, styling));
 }
 
 class Canvas extends React.Component {
