@@ -1,10 +1,9 @@
-import React from "react";
+import React, {CSSProperties} from "react";
 
-class Circle implements IShape{
-    Draw(xCenterPos: number, yCenterPos: number, width: number, height: number, style: string[]): any {
+class Circle implements IShape {
+    Draw(xCenterPos: number, yCenterPos: number, width: number, height: number, style: CSSProperties): any {
         let radius = (width + height) / 4;
-        // @ts-ignore
-        return (<circle cx={xCenterPos} cy={yCenterPos} r={radius}/>);
+        return (<circle cx={xCenterPos} cy={yCenterPos} r={radius} style={style}/>);
     }
 }
 
