@@ -51,7 +51,7 @@ export default function ToggleButtons() {
 
     return (
         <Grid container spacing={2}>
-            <Grid item sm={12} md={6}>
+            <Grid item sm={6} md={3}>
                 <div className={classes.toggleContainer}>
                     <ToggleButtonGroup
                         value={shape}

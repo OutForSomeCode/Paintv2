@@ -2,7 +2,6 @@ import React, {CSSProperties} from 'react';
 import './index.css';
 import {Shape} from './shapes/Shape';
 import {Controls} from "./controls/Controls";
-import {rgbToHex} from "@material-ui/core";
 
 let shapes: any[] = [];
 

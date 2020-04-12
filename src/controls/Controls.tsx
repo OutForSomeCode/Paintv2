@@ -1,6 +1,6 @@
 import React from "react";
 import {Circle} from "../shapes/Circle";
-import ToggleShape from "./ToggleShape";
+import ShapeSelect from "./ShapeSelect";
 
 class Controls extends React.Component {
     static type: IShape = new Circle();
@@ -8,7 +8,7 @@ class Controls extends React.Component {
     render() {
         return (
             <div id="controls">
-                <ToggleShape/>
+                <ShapeSelect/>
             </div>
         );
     }
