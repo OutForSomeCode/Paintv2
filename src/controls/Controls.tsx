@@ -2,6 +2,7 @@ import React from "react";
 import {Circle} from "../shapes/Circle";
 import ShapeSelect from "./ShapeSelect";
 import ShapeSizeInput from "./ShapeSizeInput";
+import {ShapeStyleInput} from "./ShapeStyleInput";
 import Grid from "@material-ui/core/Grid";
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
 
@@ -23,6 +24,7 @@ class Controls extends React.Component {
     static type: IShape = new Circle();
     static height: number = 50;
     static width: number = 50;
+    static hexColor: string = "#cccccc";
 
     static getStyles() {
         return useStyles();
@@ -38,7 +40,7 @@ class Controls extends React.Component {
                     <ShapeSizeInput/>
                 </Grid>
                 <Grid item sm={6} md={3}>
-                    {/*TODO*/}
+                    <ShapeStyleInput/>
                 </Grid>
             </Grid>
         );

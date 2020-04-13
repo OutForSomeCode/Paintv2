@@ -10,7 +10,7 @@ function addShape(event: { clientX: number; clientY: number; }) {
     let offset = document.getElementById("canvas").getBoundingClientRect();
     const styling: CSSProperties = {
         stroke: "black",
-        fill: "#cccccc"
+        fill: Controls.hexColor
     }
     shapes.push(new Shape(Controls.type, event.clientX - offset.left, event.clientY - offset.top, Controls.width, Controls.height, styling));
 }
@@ -34,7 +34,7 @@ class Canvas extends React.Component {
 
     render() {
         return (
-            <div onClick={this.updateItems}>
+            <div className="wrapper" onClick={this.updateItems}>
                 <svg id="canvas" onClick={addShape}>
                     {shapes.map(function (shape, i) {
                         return (shapes[i].executeStrategy());
