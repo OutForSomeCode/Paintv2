@@ -17,8 +17,8 @@ class Shape {
         this.styling = s;
     }
 
-    public executeStrategy() {
-        return this.strategy.Draw(this.posX, this.posY, this.width, this.height, this.styling);
+    public executeStrategy(i: number) {
+        return this.strategy.Draw(i, this.posX, this.posY, this.width, this.height, this.styling);
     }
 }
 

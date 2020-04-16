@@ -5,16 +5,9 @@ import {Controls} from "./controls/Controls";
 
 let shapes: any[] = [];
 
-function addShape(event: { clientX: number; clientY: number; }) {
-    let offset = document.getElementById("canvas")!.getBoundingClientRect();
-    const styling: CSSProperties = {
-        stroke: "black",
-        fill: "#cccccc"
-    }
-    shapes.push(new Shape(Controls.type, event.clientX - offset.left, event.clientY - offset.top, Controls.width, Controls.height, styling));
-}
-
 class Canvas extends React.Component {
+    private svgCanvas = React.createRef<SVGSVGElement>();
+
     constructor(props: any) {
         super(props);
         this.state = {
@@ -31,16 +24,27 @@ class Canvas extends React.Component {
         });
     };
 
+    addShape = (event: { clientX: number; clientY: number; }) => {
+        let offset = this.svgCanvas.current!.getBoundingClientRect();
+        const styling: CSSProperties = {
+            stroke: "black",
+            fill: "#cccccc"
+        }
+        shapes.push(new Shape(Controls.type, event.clientX - offset.left, event.clientY - offset.top, Controls.width, Controls.height, styling));
+    }
+
+
     render() {
         return (
             <div className="fullsize" onClick={this.updateItems}>
-                <svg className="fullsize" id="canvas" onClick={addShape}>
+                <svg className="fullsize" ref={this.svgCanvas} onClick={this.addShape}>
                     {shapes.map(function (shape, i) {
-                        return (shapes[i].executeStrategy());
+                        return (shapes[i].executeStrategy(i));
                     })}
                 </svg>
             </div>
         );
     }
 }
+
 export {Canvas}
