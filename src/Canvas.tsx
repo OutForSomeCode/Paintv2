@@ -6,8 +6,7 @@ import {Controls} from "./controls/Controls";
 let shapes: any[] = [];
 
 function addShape(event: { clientX: number; clientY: number; }) {
-    //@ts-ignore
-    let offset = document.getElementById("canvas").getBoundingClientRect();
+    let offset = document.getElementById("canvas")!.getBoundingClientRect();
     const styling: CSSProperties = {
         stroke: "black",
         fill: "#cccccc"
@@ -34,8 +33,8 @@ class Canvas extends React.Component {
 
     render() {
         return (
-            <div onClick={this.updateItems}>
-                <svg id="canvas" onClick={addShape}>
+            <div className="fullsize" onClick={this.updateItems}>
+                <svg className="fullsize" id="canvas" onClick={addShape}>
                     {shapes.map(function (shape, i) {
                         return (shapes[i].executeStrategy());
                     })}
