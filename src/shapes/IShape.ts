@@ -1,4 +1,4 @@
 // @ts-ignore
 interface IShape {
-    Draw(xCenterPos: number, yCenterPos: number, width: number, height: number, style: any): any;
+    Draw(id: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: any): any;
 }

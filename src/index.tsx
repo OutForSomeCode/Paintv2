@@ -7,7 +7,7 @@ import {Canvas} from "./Canvas";
 class App extends React.Component {
     render() {
         return (
-            <div>
+            <div className="fullsize">
                 <Controls/>
                 <Canvas/>
             </div>
