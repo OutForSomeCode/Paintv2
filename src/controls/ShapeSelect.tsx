@@ -15,6 +15,7 @@ import {Rectangle} from "../shapes/Rectangle";
 import {Triangle} from "../shapes/Triangle";
 
 export default function SelectShapeButtons() {
+    const classes = Controls.getStyles();
     const [shape, setShape] = React.useState<string | null>('circle');
 
     const changeShape = (event: React.MouseEvent<HTMLElement>, newShape: string | null) => {
@@ -38,8 +39,6 @@ export default function SelectShapeButtons() {
                 break;
         }
     };
-
-    const classes = Controls.getStyles();
 
     return (
         <div className={classes.toggleContainer}>

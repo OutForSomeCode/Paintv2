@@ -21,6 +21,5 @@ class Shape {
         return this.strategy.Draw(i, this.posX, this.posY, this.width, this.height, this.styling);
     }
 }
-
 export {Shape}
 
