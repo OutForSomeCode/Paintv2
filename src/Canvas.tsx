@@ -28,7 +28,7 @@ class Canvas extends React.Component {
         let offset = this.svgCanvas.current!.getBoundingClientRect();
         const styling: CSSProperties = {
             stroke: "black",
-            fill: "#cccccc"
+            fill: Controls.hexColor
         }
         shapes.push(new Shape(Controls.type, event.clientX - offset.left, event.clientY - offset.top, Controls.width, Controls.height, styling));
     }
