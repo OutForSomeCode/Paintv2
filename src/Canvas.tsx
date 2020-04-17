@@ -2,6 +2,7 @@ import React, {CSSProperties} from 'react';
 import './index.css';
 import {Shape} from './shapes/Shape';
 import {Controls} from "./controls/Controls";
+import {makeDraggable} from "./controls/makeDraggable";
 
 let shapes: any[] = [];
 
@@ -10,6 +11,7 @@ class Canvas extends React.Component {
 
     constructor(props: any) {
         super(props);
+        shapes.push(new Shape(Controls.type, 100, 100, 50, 50, {stroke: "black", fill: "blue"}));
         this.state = {
             shapes,
         };
@@ -37,7 +39,7 @@ class Canvas extends React.Component {
     render() {
         return (
             <div className="fullsize" onClick={this.updateItems}>
-                <svg className="fullsize" ref={this.svgCanvas} onClick={this.addShape}>
+                <svg className="fullsize" ref={this.svgCanvas} /*onClick={this.addShape}*/ onLoad={makeDraggable}>
                     {shapes.map(function (shape, i) {
                         return (shapes[i].executeStrategy(i));
                     })}

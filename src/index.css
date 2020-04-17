@@ -3,3 +3,7 @@ html, body, .fullsize {
     height: 100%;
     margin: 0;
 }
+
+.draggable{
+    cursor: move;
+}

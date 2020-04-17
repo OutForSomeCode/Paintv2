@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 class Controls extends React.Component {
+    static selectMode: boolean = false;
     static type: IShape = new Circle();
     static height: number = 50;
     static width: number = 50;
