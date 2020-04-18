@@ -1,5 +1,3 @@
-import {Canvas} from "../Canvas";
-
 function makeDraggable(evt: any) {
     let svg = evt.target;
     let selectedElement: any = false;
@@ -8,6 +6,14 @@ function makeDraggable(evt: any) {
     svg.addEventListener('mousemove', drag);
     svg.addEventListener('mouseup', endDrag);
     svg.addEventListener('mouseleave', endDrag);
+
+    function getMousePosition(evt: any) {
+        let CTM = svg.getScreenCTM();
+        return {
+            x: (evt.clientX - CTM.e) / CTM.a,
+            y: (evt.clientY - CTM.f) / CTM.d
+        };
+    }
 
     function startDrag(evt: any) {
         if (evt.target.classList.contains('draggable')) {
@@ -18,8 +24,9 @@ function makeDraggable(evt: any) {
     function drag(evt: any) {
         if (selectedElement) {
             evt.preventDefault();
-            selectedElement.setAttributeNS(null, "x", evt.clientX);
-            selectedElement.setAttributeNS(null, "y", evt.clientY);
+            let pos = getMousePosition(evt);
+            selectedElement.setAttributeNS(null, "x", pos.x);
+            selectedElement.setAttributeNS(null, "y", pos.y);
         }
     }
 
