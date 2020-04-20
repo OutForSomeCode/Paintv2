@@ -2,6 +2,7 @@ import React, {CSSProperties} from 'react';
 import './index.css';
 import {Shape} from './shapes/Shape';
 import {Controls} from "./controls/Controls";
+import {makeDraggable} from "./controls/makeDraggable";
 
 let shapes: any[] = [];
 

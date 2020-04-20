@@ -9,10 +9,10 @@ import ChangeHistoryRoundedIcon from '@material-ui/icons/ChangeHistoryRounded';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import {Controls} from "./Controls";
-import {Circle} from "../shapes/Circle";
 import {Square} from "../shapes/Square";
 import {Rectangle} from "../shapes/Rectangle";
 import {Triangle} from "../shapes/Triangle";
+import {Elliptic} from "../shapes/Elliptic";
 
 export default function SelectShapeButtons() {
     const classes = Controls.getStyles();
@@ -23,7 +23,7 @@ export default function SelectShapeButtons() {
 
         switch (newShape) {
             case "circle":
-                Controls.type = new Circle();
+                Controls.type = new Elliptic();
                 break;
             case "square":
                 Controls.type = new Square();
@@ -35,7 +35,7 @@ export default function SelectShapeButtons() {
                 Controls.type = new Triangle();
                 break;
             default:
-                Controls.type = new Circle();
+                Controls.type = new Elliptic();
                 break;
         }
     };

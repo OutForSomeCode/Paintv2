@@ -1,10 +1,10 @@
 import React from "react";
-import {Circle} from "../shapes/Circle";
 import ShapeSelect from "./ShapeSelect";
 import ShapeSizeInput from "./ShapeSizeInput";
 import {ShapeStyleInput} from "./ShapeStyleInput";
 import Grid from "@material-ui/core/Grid";
 import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {Elliptic} from "../shapes/Elliptic";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 class Controls extends React.Component {
     static selectMode: boolean = false;
-    static type: IShape = new Circle();
+    static type: IShape = new Elliptic();
     static height: number = 50;
     static width: number = 50;
     static hexColor: string = "#cccccc";
