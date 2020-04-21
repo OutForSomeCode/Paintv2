@@ -1,5 +1,5 @@
 import React from "react";
-import {makeDraggable} from "../controls/makeDraggable";
+import {makeDraggable} from "../functions/makeDraggable";
 
 class Polygon extends React.Component {
     componentDidMount(): void {

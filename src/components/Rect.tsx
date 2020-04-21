@@ -1,5 +1,5 @@
 import React from "react";
-import {makeDraggable} from "../controls/makeDraggable";
+import {makeDraggable} from "../functions/makeDraggable";
 
 class Rect extends React.Component {
     componentDidMount(): void {

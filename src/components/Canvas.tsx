@@ -1,10 +1,13 @@
 import React, {CSSProperties} from 'react';
-import './index.css';
-import {Shape} from './shapes/Shape';
-import {Controls} from "./controls/Controls";
-import {makeDraggable} from "./controls/makeDraggable";
+import {Shape} from '../shapes/Shape';
+import {Controls} from "../controls/Controls";
 
 let shapes: any[] = [];
+
+export function updateShape(id: any, x: number, y: number) {
+    const shape: Shape = shapes.find(({uuid}) => uuid === id)
+    shape.updatePosition(x, y);
+}
 
 class Canvas extends React.Component {
     private svgCanvas = React.createRef<SVGSVGElement>();
