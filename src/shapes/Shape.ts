@@ -1,6 +1,10 @@
-import {CSSProperties} from "react";
+import {CSSProperties} from 'react'
+
+const uuid = require('react-uuid');
 
 class Shape {
+    public uuid: any = null;
+
     private strategy: IShape;
     private posX: number;
     private posY: number;
@@ -15,11 +19,18 @@ class Shape {
         this.width = w;
         this.height = h;
         this.styling = s;
+        this.uuid = uuid();
     }
 
-    public executeStrategy(i: number) {
-        return this.strategy.Draw(i, this.posX, this.posY, this.width, this.height, this.styling);
+    public executeStrategy() {
+        return this.strategy.Draw(this.uuid, this.posX, this.posY, this.width, this.height, this.styling);
+    }
+
+    public updatePosition(x: number, y: number) {
+        this.posX = x;
+        this.posY = y;
     }
 }
+
 export {Shape}
 
