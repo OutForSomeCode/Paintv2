@@ -22,13 +22,17 @@ class Shape {
         this.uuid = uuid();
     }
 
-    public executeStrategy() {
-        return this.strategy.Draw(this.uuid, this.posX, this.posY, this.width, this.height, this.styling);
+    public draw() {
+        return this.strategy.draw(this.uuid, this.posX, this.posY, this.width, this.height, this.styling);
     }
 
     public updatePosition(x: number, y: number) {
         this.posX = x;
         this.posY = y;
+    }
+
+    public getPosition(): number[] {
+        return [this.posX, this.posY];
     }
 }
 

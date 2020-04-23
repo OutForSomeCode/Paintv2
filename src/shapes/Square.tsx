@@ -2,7 +2,7 @@ import React, {CSSProperties} from "react";
 import {Rect} from "../components/Rect";
 
 class Square implements IShape{
-    Draw(index:number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: CSSProperties): any {
+    draw(index:number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: CSSProperties): any {
         let offsetX = width / 2;
         let offsetY = height / 2;
         let size = (width + height) / 2;

@@ -1,7 +1,7 @@
 import React from "react";
 import {makeDraggable} from "../functions/makeDraggable";
 
-class Circle extends React.Component {
+class Circle extends React.Component<any, any> {
     componentDidMount(): void {
         makeDraggable(this);
     }
