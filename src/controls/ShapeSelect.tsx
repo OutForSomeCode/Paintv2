@@ -15,7 +15,6 @@ import {Triangle} from "../shapes/Triangle";
 import {Elliptic} from "../shapes/Elliptic";
 
 export default function SelectShapeButtons() {
-    const classes = Controls.getStyles();
     const [shape, setShape] = React.useState<string | null>('circle');
 
     const changeShape = (event: React.MouseEvent<HTMLElement>, newShape: string | null) => {
@@ -41,12 +40,13 @@ export default function SelectShapeButtons() {
     };
 
     return (
-        <div className={classes.toggleContainer}>
+        <div>
             <ToggleButtonGroup
                 value={shape}
                 exclusive
                 onChange={changeShape}
                 aria-label="text alignment"
+                size="large"
             >
                 <ToggleButton value="circle" aria-label="left aligned">
                     <RadioButtonUncheckedIcon/>

@@ -4,7 +4,7 @@ import './index.css';
 import {Controls} from "./controls/Controls";
 import {Canvas} from "./components/Canvas";
 
-class App extends React.Component {
+class App extends React.Component<any, any> {
     render() {
         return (
             <div className="fullsize">
@@ -19,3 +19,4 @@ ReactDOM.render(
     <App/>,
     document.getElementById('root')
 );
+

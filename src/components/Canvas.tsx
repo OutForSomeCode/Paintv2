@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React from 'react';
 import {Shape} from '../shapes/Shape';
 import {Controls} from "../controls/Controls";
 import {Shapes} from "../shapes/Shapes";
@@ -13,11 +13,11 @@ class Canvas extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            shapes: this._shapes.shapeArray,
+            shapes: [],
         };
     }
 
-    updateItems() {
+    updateItems = () => {
         this.setState({
                 shapes: this._shapes.shapeArray
             }
@@ -26,11 +26,18 @@ class Canvas extends React.Component<any, any> {
 
     addShape = (event: { clientX: number; clientY: number; }) => {
         let offset = this._svgCanvas.current!.getBoundingClientRect();
-        const styling: CSSProperties = {
-            stroke: "black",
-            fill: Controls.hexColor
-        }
-        this._commands.push(new CreateShape(new Shape(Controls.type, event.clientX - offset.left, event.clientY - offset.top, Controls.width, Controls.height, styling)));
+        this._commands.push(
+            new CreateShape(
+                new Shape(
+                    Controls.type,
+                    event.clientX - offset.left,
+                    event.clientY - offset.top,
+                    Controls.width,
+                    Controls.height,
+                    Controls.styling
+                )
+            )
+        );
         this.updateItems();
     }
 

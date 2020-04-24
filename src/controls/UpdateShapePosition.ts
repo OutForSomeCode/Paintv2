@@ -1,5 +1,6 @@
 import {Shapes} from "../shapes/Shapes";
 import {Shape} from "../shapes/Shape";
+import {ICommand} from "./ICommand";
 
 class UpdateShapePosition implements ICommand {
     private shapes = Shapes.getShapes();

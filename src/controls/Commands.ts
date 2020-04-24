@@ -1,3 +1,5 @@
+import {ICommand} from "./ICommand";
+
 class Commands {
     private static _instance: Commands;
     private _commandArray: ICommand[] = [];
@@ -6,8 +8,8 @@ class Commands {
     private constructor() {
     }
 
-    public static getCommands(): Commands{
-        if(!Commands._instance){
+    public static getCommands(): Commands {
+        if (!Commands._instance) {
             Commands._instance = new Commands();
         }
         return Commands._instance;
@@ -23,22 +25,25 @@ class Commands {
         this._commandArray = value;
     }
 
-    public push(command: ICommand): void {
-        if (command.execute()){
+    public push = (command: ICommand): void => {
+        if (command.execute()) {
             this._commandArray.push(command);
         }
     }
 
-    public undo(): void {
-        let command = this._commandArray.pop();
-        if (command != null){
+    public undo = (): void => {
+        let command = this._commandArray.pop() as ICommand;
+        if (command != null) {
             command.undo();
             this._undoneCommands.push(command);
         }
     }
 
-    public redo(): void {
-        this.push(this._undoneCommands.pop() as ICommand);
+    public redo = (): void => {
+        if (this._undoneCommands.length > 0) {
+            this.push(this._undoneCommands.pop() as ICommand);
+        }
     }
 }
+
 export {Commands}

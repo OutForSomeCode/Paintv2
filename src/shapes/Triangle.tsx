@@ -1,5 +1,6 @@
 import React from "react";
 import {Polygon} from "../components/Polygon";
+import {IShape} from "./IShape";
 
 class Triangle implements IShape {
     draw(index: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: any): any {

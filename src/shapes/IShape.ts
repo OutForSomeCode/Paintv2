@@ -1,4 +1,3 @@
-// @ts-ignore
-interface IShape {
+export interface IShape {
     draw(index: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: any): any;
 }

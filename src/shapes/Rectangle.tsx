@@ -1,5 +1,6 @@
 import React, {CSSProperties} from "react";
 import {Rect} from "../components/Rect";
+import {IShape} from "./IShape";
 
 class Rectangle implements IShape {
     draw(index: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: CSSProperties): any {

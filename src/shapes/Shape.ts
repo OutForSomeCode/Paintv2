@@ -1,4 +1,5 @@
 import {CSSProperties} from 'react'
+import {IShape} from "./IShape";
 
 const uuid = require('react-uuid');
 
@@ -27,8 +28,8 @@ class Shape {
     }
 
     public updatePosition(x: number, y: number) {
-        this.posX = x;
-        this.posY = y;
+        this.posX += x;
+        this.posY += y;
     }
 
     public getPosition(): number[] {

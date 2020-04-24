@@ -1,5 +1,6 @@
 import {Shape} from "../shapes/Shape";
 import {Shapes} from "../shapes/Shapes";
+import {ICommand} from "./ICommand";
 
 class CreateShape implements ICommand {
     private shapes = Shapes.getShapes();

@@ -1,8 +1,7 @@
 import React from 'react';
 import reactCSS from 'reactcss';
 import {SketchPicker} from 'react-color';
-import {ButtonGroup} from "@material-ui/core";
-import {Button} from "@material-ui/core";
+import {Button, ButtonGroup} from "@material-ui/core";
 import {Controls} from "./Controls";
 
 class ShapeStyleInput extends React.Component {
@@ -13,7 +12,10 @@ class ShapeStyleInput extends React.Component {
 
     handleChangeComplete = (color: any) => {
         this.setState({background: color.hex});
-        Controls.hexColor = color.hex;
+        Controls.styling = {
+            fill: color.hex,
+            stroke: "black"
+        };
     };
 
     handleClick = () => {
@@ -37,11 +39,14 @@ class ShapeStyleInput extends React.Component {
                 bottom: '0px',
                 left: '0px',
             },
+            styleButton: {
+                margin: '16px',
+            },
             // @ts-ignore
         }) as reactCSS;
 
         return (
-            <div>
+            <div style={styles.styleButton}>
                 <ButtonGroup>
                     <Button size="large" onClick={this.handleClick}>
                         Background color

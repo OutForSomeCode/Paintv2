@@ -3,7 +3,6 @@ import TextField from '@material-ui/core/TextField';
 import {Controls} from "./Controls";
 
 export default function ShapeSizeInputs() {
-    const classes = Controls.getStyles();
     const [height, setHeight] = React.useState('50');
     const [width, setWidth] = React.useState('50');
 
@@ -18,7 +17,7 @@ export default function ShapeSizeInputs() {
     };
 
     return (
-        <form className={classes.sizeForm} noValidate autoComplete="off">
+        <form noValidate autoComplete="off">
             <TextField
                 id="width-input"
                 type="number"
