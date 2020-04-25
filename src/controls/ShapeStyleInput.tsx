@@ -2,7 +2,8 @@ import React from 'react';
 import reactCSS from 'reactcss';
 import {SketchPicker} from 'react-color';
 import {Button, ButtonGroup} from "@material-ui/core";
-import {Controls} from "./Controls";
+import Grid from "@material-ui/core/Grid";
+import {SharedShapeData} from "../shapes/SharedShapeData";
 
 class ShapeStyleInput extends React.Component {
     state = {
@@ -12,7 +13,7 @@ class ShapeStyleInput extends React.Component {
 
     handleChangeComplete = (color: any) => {
         this.setState({background: color.hex});
-        Controls.styling = {
+        SharedShapeData.styling = {
             fill: color.hex,
             stroke: "black"
         };
@@ -39,14 +40,11 @@ class ShapeStyleInput extends React.Component {
                 bottom: '0px',
                 left: '0px',
             },
-            styleButton: {
-                margin: '16px',
-            },
             // @ts-ignore
         }) as reactCSS;
 
         return (
-            <div style={styles.styleButton}>
+            <Grid item>
                 <ButtonGroup>
                     <Button size="large" onClick={this.handleClick}>
                         Background color
@@ -59,7 +57,7 @@ class ShapeStyleInput extends React.Component {
                         onChangeComplete={this.handleChangeComplete}
                     />
                 </div> : null}
-            </div>
+            </Grid>
         );
     }
 }

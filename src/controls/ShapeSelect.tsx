@@ -1,18 +1,18 @@
 import React from 'react';
 
-import AspectRatioIcon from '@material-ui/icons/AspectRatio';
 import CropSquareIcon from '@material-ui/icons/CropSquare';
 import Crop169Icon from '@material-ui/icons/Crop169';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ChangeHistoryRoundedIcon from '@material-ui/icons/ChangeHistoryRounded';
 
+import Grid from '@material-ui/core/Grid';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import {Controls} from "./Controls";
 import {Square} from "../shapes/Square";
 import {Rectangle} from "../shapes/Rectangle";
 import {Triangle} from "../shapes/Triangle";
 import {Elliptic} from "../shapes/Elliptic";
+import {SharedShapeData} from "../shapes/SharedShapeData";
 
 export default function SelectShapeButtons() {
     const [shape, setShape] = React.useState<string | null>('circle');
@@ -22,45 +22,44 @@ export default function SelectShapeButtons() {
 
         switch (newShape) {
             case "circle":
-                Controls.type = new Elliptic();
+                SharedShapeData.type = new Elliptic();
                 break;
             case "square":
-                Controls.type = new Square();
+                SharedShapeData.type = new Square();
                 break;
             case "rectangle":
-                Controls.type = new Rectangle();
+                SharedShapeData.type = new Rectangle();
                 break;
             case "triangle":
-                Controls.type = new Triangle();
+                SharedShapeData.type = new Triangle();
                 break;
             default:
-                Controls.type = new Elliptic();
+                SharedShapeData.type = new Elliptic();
                 break;
         }
     };
 
     return (
-        <div>
+        <Grid item>
             <ToggleButtonGroup
                 value={shape}
                 exclusive
                 onChange={changeShape}
                 aria-label="text alignment"
-                size="large"
             >
-                <ToggleButton value="circle" aria-label="left aligned">
+                <ToggleButton value="circle">
                     <RadioButtonUncheckedIcon/>
                 </ToggleButton>
-                <ToggleButton value="square" aria-label="centered">
+                <ToggleButton value="square">
                     <CropSquareIcon/>
                 </ToggleButton>
-                <ToggleButton value="rectangle" aria-label="right aligned">
+                <ToggleButton value="rectangle">
                     <Crop169Icon/>
                 </ToggleButton>
-                <ToggleButton value="triangle" aria-label="justified">
+                <ToggleButton value="triangle">
                     <ChangeHistoryRoundedIcon/>
                 </ToggleButton>
             </ToggleButtonGroup>
-        </div>
+        </Grid>
     );
 }
