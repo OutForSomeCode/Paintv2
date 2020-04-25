@@ -1,6 +1,5 @@
 import React from "react";
 import {findDOMNode} from "react-dom";
-import {updateShape} from '../components/Canvas'
 
 const d3 = require("d3");
 
@@ -22,7 +21,6 @@ function makeDraggable(comp: React.Component) {
             translateY = d3.event.y;
             me.attr('transform', transform);
         }).on('end', function () {
-            updateShape(node.id, translateX, translateY);
             //TODO: update x & y in the corresponding shape (inside shapes => canvas)
         });
     handleDrag(d3.select(node));
