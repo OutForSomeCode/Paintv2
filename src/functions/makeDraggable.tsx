@@ -1,5 +1,7 @@
 import React from "react";
 import {findDOMNode} from "react-dom";
+import {Commands} from "../controls/Commands";
+import {UpdateShapePosition} from "../controls/UpdateShapePosition";
 
 const d3 = require("d3");
 
@@ -8,6 +10,7 @@ function makeDraggable(comp: React.Component) {
     let translateY = 0;
 
     const node: any = findDOMNode(comp);
+    const commands = Commands.getCommands()
 
     const handleDrag = d3.drag()
         .subject(function() {
@@ -21,6 +24,7 @@ function makeDraggable(comp: React.Component) {
             translateY = d3.event.y;
             me.attr('transform', transform);
         }).on('end', function () {
+            commands.push(new UpdateShapePosition(node.id, translateX, translateY))
             //TODO: update x & y in the corresponding shape (inside shapes => canvas)
         });
     handleDrag(d3.select(node));

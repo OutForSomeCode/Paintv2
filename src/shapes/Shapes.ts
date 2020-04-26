@@ -24,19 +24,19 @@ class Shapes {
         this._shapeArray = value;
     }
 
-    public add(shape: Shape) {
+    public add = (shape: Shape) => {
         this._shapeArray.push(shape);
     }
 
-    public remove(uuid: any) {
+    public remove = (uuid: any) => {
         this._shapeArray.splice(this._shapeArray.indexOf(this.get(uuid)), 1);
     }
 
-    public update(updatedShape: Shape) {
+    public update = (updatedShape: Shape) => {
         this._shapeArray.splice(this._shapeArray.indexOf(this.get(updatedShape.uuid)), 1, updatedShape);
     }
 
-    public get(uuid: any): Shape {
+    public get = (uuid: any): Shape => {
         return this._shapeArray.find((shape: Shape) => shape.uuid === uuid) as Shape;
     }
 }

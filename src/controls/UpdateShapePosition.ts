@@ -13,17 +13,19 @@ class UpdateShapePosition implements ICommand {
         this.uuid = uuid;
         this.posX = x;
         this.posY = y;
-        this.backupShape = this.shapes.get(uuid);
+        this.backupShape = this.shapes.get(uuid); // creates a reference => deep copy needed
     }
 
-    execute(): boolean {
+    execute = (): boolean => {
         const shape: Shape = this.shapes.get(this.uuid);
         shape.updatePosition(this.posX, this.posY);
         this.shapes.update(shape);
         return true;
     }
 
-    undo(): void {
+    undo = (): void => {
         this.shapes.update(this.backupShape);
     }
 }
+
+export {UpdateShapePosition}
