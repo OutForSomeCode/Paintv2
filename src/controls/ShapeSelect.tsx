@@ -9,10 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import {Square} from "../shapes/Square";
-import {Rectangle} from "../shapes/Rectangle";
 import {Triangle} from "../shapes/Triangle";
-import {Elliptic} from "../shapes/Elliptic";
+import {Circle} from "../shapes/Circle";
 import {SharedShapeData} from "../shapes/SharedShapeData";
+import {Rectangle} from "../shapes/Ractangle";
 
 export default function SelectShapeButtons() {
     const [shape, setShape] = React.useState<string | null>('circle');
@@ -22,7 +22,7 @@ export default function SelectShapeButtons() {
 
         switch (newShape) {
             case "circle":
-                SharedShapeData.type = new Elliptic();
+                SharedShapeData.type = new Circle();
                 break;
             case "square":
                 SharedShapeData.type = new Square();
@@ -31,10 +31,10 @@ export default function SelectShapeButtons() {
                 SharedShapeData.type = new Rectangle();
                 break;
             case "triangle":
-                SharedShapeData.type = new Triangle();
+                SharedShapeData.type = new Triangle()
                 break;
             default:
-                SharedShapeData.type = new Elliptic();
+                SharedShapeData.type = new Circle();
                 break;
         }
     };

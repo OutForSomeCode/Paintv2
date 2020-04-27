@@ -7,7 +7,7 @@ class Rectangle implements IShape {
         let offsetX = width / 2;
         let offsetY = height / 2;
         // @ts-ignore
-        return (<Rect key={index} id={index} x={xCenterPos - offsetX} y={yCenterPos - offsetY} width={width} height={height} style={style}/>);
+        return <Rect key={index} id={index} x={xCenterPos - offsetX} y={yCenterPos - offsetY} width={width} height={height} style={style}/>;
     }
 }
 

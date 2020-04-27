@@ -4,7 +4,7 @@ import {UpdateShapePosition} from "../controls/UpdateShapePosition";
 import {findDOMNode} from "react-dom";
 const d3 = require("d3");
 
-class Circle extends React.Component<any, any> {
+class Ellipse extends React.Component<any, any> {
     componentDidMount(): void {
         const shapeID = this.props.id.toString();
         d3.select(findDOMNode(this)).call(drag());
@@ -42,9 +42,9 @@ class Circle extends React.Component<any, any> {
     }
 
     render() {
-        return <circle {...this.props}/>;
+        return <ellipse {...this.props}/>;
     }
 }
 
-export {Circle}
+export {Ellipse}
 

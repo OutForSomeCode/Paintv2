@@ -12,8 +12,10 @@ class Rect extends React.Component<any, any> {
 
         function drag() {
             const commands = Commands.getCommands();
-            let x: number = shape.x;
-            let y: number = shape.y;
+            let pos = {
+                x: shape.x,
+                y: shape.y
+            }
 
             function dragStarted() {
                 // @ts-ignore
@@ -21,22 +23,22 @@ class Rect extends React.Component<any, any> {
             }
 
             function dragging() {
-                x = d3.event.x;
-                y = d3.event.y;
+                pos.x = d3.event.x;
+                pos.y = d3.event.y;
 
                 // @ts-ignore
                 d3.select(this).attr("x", d3.event.x).attr("y", d3.event.y);
             }
 
             function dragEnded() {
-                commands.push(new UpdateShapePosition(shapeID, x, y));
+                commands.push(new UpdateShapePosition(shapeID, pos.x + shape.width / 2, pos.y + shape.height / 2));
 
                 // @ts-ignore
                 d3.select(this).style("stroke", "#000000");
             }
 
             return d3.drag()
-                .subject(function () {return {x: x, y: y}})
+                .subject(function () {return pos})
                 .on("start", dragStarted)
                 .on("drag", dragging)
                 .on("end", dragEnded);
