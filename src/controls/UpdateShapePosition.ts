@@ -4,27 +4,30 @@ import {ICommand} from "./ICommand";
 
 class UpdateShapePosition implements ICommand {
     private shapes = Shapes.getShapes();
-    private backupShape: Shape;
-    private uuid: any;
-    private posX: number;
-    private posY: number;
+    private shape: Shape;
+    private oldPosX: number;
+    private oldPosY: number;
+    private newPosX: number;
+    private newPosY: number;
 
     constructor(uuid: any, x: number, y: number) {
-        this.uuid = uuid;
-        this.posX = x;
-        this.posY = y;
-        this.backupShape = this.shapes.get(uuid); // creates a reference => deep copy needed
+        this.shape = this.shapes.get(uuid);
+        this.newPosX = x;
+        this.newPosY = y;
+        let oldPosition = this.shape.getPosition();
+        this.oldPosX = oldPosition[0];
+        this.oldPosY = oldPosition[1];
     }
 
     execute = (): boolean => {
-        const shape: Shape = this.shapes.get(this.uuid);
-        shape.updatePosition(this.posX, this.posY);
-        this.shapes.update(shape);
+        // adds posX, posY values to current position
+        this.shape.updatePosition(this.newPosX, this.newPosY);
         return true;
     }
 
     undo = (): void => {
-        this.shapes.update(this.backupShape);
+        // subtracts posX, posY values from current position
+        this.shape.updatePosition(this.oldPosX, this.oldPosY);
     }
 }
 

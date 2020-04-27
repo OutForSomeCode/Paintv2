@@ -32,10 +32,6 @@ class Shapes {
         this._shapeArray.splice(this._shapeArray.indexOf(this.get(uuid)), 1);
     }
 
-    public update = (updatedShape: Shape) => {
-        this._shapeArray.splice(this._shapeArray.indexOf(this.get(updatedShape.uuid)), 1, updatedShape);
-    }
-
     public get = (uuid: any): Shape => {
         return this._shapeArray.find((shape: Shape) => shape.uuid === uuid) as Shape;
     }

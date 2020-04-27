@@ -28,8 +28,12 @@ class Shape {
     }
 
     public updatePosition = (x: number, y: number) => {
-        this.posX += x;
-        this.posY += y;
+        this.posX = x;
+        this.posY = y;
+    }
+
+    public getPosition(): number[]{
+        return [this.posX, this.posY];
     }
 }
 

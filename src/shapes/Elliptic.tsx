@@ -2,7 +2,7 @@ import React, {CSSProperties} from "react";
 import {Circle} from "../components/Circle";
 import {IShape} from "./IShape";
 
-class Elliptic implements IShape{
+class Elliptic implements IShape {
     draw(index: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: CSSProperties): any {
         const radius = (width + height) / 4;
         // @ts-ignore
