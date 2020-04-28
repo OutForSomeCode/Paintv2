@@ -4,7 +4,7 @@ import {FileIO} from "./FileIO";
 export default function IOMenu() {
     return (
         <div>
-            <button onClick={FileIO.Save()}>
+            <button onClick={() => FileIO.Save()}>
                 Save
             </button>
             <button>

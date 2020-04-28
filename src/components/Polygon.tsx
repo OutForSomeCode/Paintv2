@@ -38,7 +38,7 @@ class Polygon extends React.Component<any, any> {
             }
 
             function dragEnded() {
-                commands.push(new UpdateShapePosition(shapeID, pos.x, pos.y));
+                commands.push(new UpdateShapePosition(shapeID, pos.x));
 
                 // @ts-ignore
                 d3.select(this).style("stroke", "#000000");

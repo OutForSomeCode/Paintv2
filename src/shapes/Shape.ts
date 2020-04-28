@@ -1,5 +1,6 @@
 import {CSSProperties} from 'react'
 import {IShape} from "./IShape";
+import {Vector2} from "../utility/Vector2";
 
 const uuid = require('react-uuid');
 
@@ -7,33 +8,32 @@ class Shape {
     public uuid: any = null;
 
     private strategy: IShape;
-    private cenPosX: number;
-    private cenPosY: number;
-    private width: number;
-    private height: number;
+    private cenPos: Vector2;
+    private size: Vector2;
     private styling: CSSProperties;
 
     constructor(strategy: IShape, cx: number, cy: number, w: number, h: number, s: CSSProperties) {
         this.strategy = strategy;
-        this.cenPosX = cx;
-        this.cenPosY = cy;
-        this.width = w;
-        this.height = h;
+        this.cenPos = new Vector2(cx, cy);
+        this.size = new Vector2(w, h);
         this.styling = s;
         this.uuid = uuid();
     }
 
     public draw = () => {
-        return this.strategy.draw(this.uuid, this.cenPosX, this.cenPosY, this.width, this.height, this.styling);
+        return this.strategy.draw(this.uuid, this.cenPos, this.size, this.styling);
     }
 
-    public updatePosition = (x: number, y: number) => {
-        this.cenPosX = x;
-        this.cenPosY = y;
+    public updatePosition = (p: Vector2) => {
+        this.cenPos = p;
     }
 
-    public getPosition(): number[]{
-        return [this.cenPosX, this.cenPosY];
+    public getPosition(): Vector2{
+        return this.cenPos;
+    }
+
+    getType() {
+        return this.strategy.getType();
     }
 }
 

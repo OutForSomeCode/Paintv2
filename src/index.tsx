@@ -13,6 +13,7 @@ import {Shape} from "./shapes/Shape";
 import {CreateShape} from "./controls/CreateShape";
 import {SharedShapeData} from "./shapes/SharedShapeData";
 import {Commands} from "./controls/Commands";
+import IOMenu from "./IO/Menu";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,6 +72,7 @@ function App() {
 
     return (
         <Grid className={_classes.root} container spacing={1}>
+            <IOMenu/>
             <Grid item>
                 <Grid className={_classes.test} container direction={"column"}>
                     <Paper className={_classes.control} elevation={3}>
