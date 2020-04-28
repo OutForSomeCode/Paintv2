@@ -4,7 +4,7 @@ import {Vector2} from "../utility/Vector2";
 
 const uuid = require('react-uuid');
 
-class Shape {
+class Shape implements IShapeGroup {
     private readonly _uuid: any = null;
     private _strategy: IShape;
     private _cenPosX: number;
