@@ -73,10 +73,10 @@ function App() {
 
     return (
         <Grid className={_classes.root} container spacing={1} onClick={()=> update()}>
-            <IOMenu/>
             <Grid item>
                 <Grid className={_classes.test} container direction={"column"}>
                     <Paper className={_classes.control} elevation={3}>
+                        <IOMenu shapeUpdate={update}/>
                         <History shapeUpdate={update}/>
                         <ShapeSelect/>
                         <ShapeSizeInput/>
