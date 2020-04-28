@@ -8,7 +8,7 @@ class Commands {
     private constructor() {
     }
 
-    public static getCommands(): Commands {
+    public static getInstance(): Commands {
         if (!Commands._instance) {
             Commands._instance = new Commands();
         }

@@ -8,7 +8,7 @@ const d3 = require("d3");
 
 function makeDraggable(comp: React.Component) {
     const node: any = findDOMNode(comp);
-    const commands = Commands.getCommands()
+    const commands = Commands.getInstance()
 
     let translate: Vector2;
 

@@ -8,7 +8,7 @@ app: any
     private constructor() {
     }
 
-    public static getShapes() :Shapes {
+    public static getInstance() :Shapes {
         if(!Shapes._instance){
             Shapes._instance = new Shapes();
         }
@@ -25,16 +25,16 @@ app: any
         this._shapeArray = value;
     }
 
-    public add = (shape: Shape) => {
+    public add = (shape: Shape): void => {
         this._shapeArray.push(shape);
     }
 
-    public remove = (uuid: any) => {
-        this._shapeArray.splice(this._shapeArray.indexOf(this.get(uuid)), 1);
+    public remove = (uuid: any): Shape[] => {
+        return this._shapeArray.splice(this._shapeArray.indexOf(this.get(uuid)), 1);
     }
 
     public get = (uuid: any): Shape => {
-        return this._shapeArray.find((shape: Shape) => shape.uuid === uuid) as Shape;
+        return this._shapeArray.find((shape: Shape) => shape.getUuid() === uuid) as Shape;
     }
 }
 export {Shapes}

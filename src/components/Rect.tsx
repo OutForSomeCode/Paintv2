@@ -13,7 +13,7 @@ class Rect extends React.Component<any, any> {
         d3.select(findDOMNode(this)).call(drag());
 
         function drag() {
-            const commands = Commands.getCommands();
+            const commands = Commands.getInstance();
             let pos = new Vector2(shape.x, shape.y);
 
             function dragStarted() {
