@@ -14,7 +14,7 @@ class Rect extends React.Component<any, any> {
 
         function drag() {
             const commands = Commands.getCommands();
-            let pos = new Vector2(shape.cx, shape.cy);
+            let pos = new Vector2(shape.x, shape.y);
 
             function dragStarted() {
                 // @ts-ignore
