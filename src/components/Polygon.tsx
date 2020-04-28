@@ -12,7 +12,7 @@ class Polygon extends React.Component<any, any> {
         d3.select(findDOMNode(this)).call(drag());
 
         function drag() {
-            const commands = Commands.getCommands();
+            const commands = Commands.getInstance();
             let width = shape.width;
             let height = shape.height;
             let pos = new Vector2(shape.cx, shape.cy);

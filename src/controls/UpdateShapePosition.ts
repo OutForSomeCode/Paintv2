@@ -4,7 +4,7 @@ import {ICommand} from "./ICommand";
 import {Vector2} from "../utility/Vector2";
 
 class UpdateShapePosition implements ICommand {
-    private shapes = Shapes.getShapes();
+    private shapes = Shapes.getInstance();
     private shape: Shape;
     private oldPos: Vector2;
     private newPos: Vector2;

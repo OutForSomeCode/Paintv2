@@ -44,19 +44,19 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function App() {
-    const _svgCanvas = React.createRef<SVGSVGElement>();
-    const _shapes = Shapes.getShapes();
-    const _commands = Commands.getCommands();
-    const _classes = useStyles();
-    const [shapeArray, setShapes] = React.useState({shapes: _shapes.shapeArray});
+    const svgCanvas = React.createRef<SVGSVGElement>();
+    const shapeInstance = Shapes.getInstance();
+    const commandInstance = Commands.getInstance();
+    const classes = useStyles();
+    const [shapeArray, setShapes] = React.useState({shapes: shapeInstance.shapeArray});
 
     function update(): void {
-        setShapes({shapes: _shapes.shapeArray});
+        setShapes({shapes: shapeInstance.shapeArray});
     }
 
     function addShape(event: { clientX: number; clientY: number; }): any {
-        let offset = _svgCanvas.current!.getBoundingClientRect();
-        _commands.push(
+        let offset = svgCanvas.current!.getBoundingClientRect();
+        commandInstance.push(
             new CreateShape(
                 new Shape(
                     SharedShapeData.type,
@@ -72,10 +72,10 @@ function App() {
     }
 
     return (
-        <Grid className={_classes.root} container spacing={1} onClick={()=> update()}>
+        <Grid className={classes.root} container spacing={1}>
             <Grid item>
-                <Grid className={_classes.test} container direction={"column"}>
-                    <Paper className={_classes.control} elevation={3}>
+                <Grid className={classes.test} container direction={"column"}>
+                    <Paper className={classes.control} elevation={3}>
                         <IOMenu shapeUpdate={update}/>
                         <History shapeUpdate={update}/>
                         <ShapeSelect/>
@@ -85,8 +85,8 @@ function App() {
                 </Grid>
             </Grid>
             <Grid item xs>
-                <Paper className={_classes.test} elevation={2}>
-                    <svg className="fullSize" ref={_svgCanvas} onClick={addShape}>
+                <Paper className={classes.test} elevation={2}>
+                    <svg className="fullSize" ref={svgCanvas} onClick={addShape}>
                         {shapeArray.shapes.map((shape: Shape) => (
                             shape.draw()
                         ))}

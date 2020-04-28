@@ -5,7 +5,13 @@ import {Vector2} from "../utility/Vector2";
 const uuid = require('react-uuid');
 
 class Shape {
-    public uuid: any = null;
+    private readonly _uuid: any = null;
+    private _strategy: IShape;
+    private _cenPosX: number;
+    private _cenPosY: number;
+    private _width: number;
+    private _height: number;
+    private _styling: CSSProperties;
 
     private strategy: IShape;
     private cenPos: Vector2;
@@ -38,6 +44,10 @@ class Shape {
 
     getsize(): Vector2 {
         return this._size;
+    }
+
+    public getUuid(): any{
+        return this._uuid;
     }
 }
 

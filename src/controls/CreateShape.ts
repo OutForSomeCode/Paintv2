@@ -3,20 +3,20 @@ import {Shapes} from "../shapes/Shapes";
 import {ICommand} from "./ICommand";
 
 class CreateShape implements ICommand {
-    private shapes = Shapes.getShapes();
-    private shape: Shape;
+    private _shapeInstance = Shapes.getInstance();
+    private _shape: Shape;
 
     constructor(shape: Shape) {
-        this.shape = shape;
+        this._shape = shape;
     }
 
     execute(): boolean {
-        this.shapes.add(this.shape);
+        this._shapeInstance.add(this._shape);
         return true;
     }
 
     undo(): void {
-        this.shapes.remove(this.shape.uuid);
+        this._shapeInstance.remove(this._shape.getUuid());
     }
 }
 
