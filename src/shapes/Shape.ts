@@ -7,16 +7,16 @@ class Shape {
     public uuid: any = null;
 
     private strategy: IShape;
-    private posX: number;
-    private posY: number;
+    private cenPosX: number;
+    private cenPosY: number;
     private width: number;
     private height: number;
     private styling: CSSProperties;
 
-    constructor(strategy: IShape, x: number, y: number, w: number, h: number, s: CSSProperties) {
+    constructor(strategy: IShape, cx: number, cy: number, w: number, h: number, s: CSSProperties) {
         this.strategy = strategy;
-        this.posX = x;
-        this.posY = y;
+        this.cenPosX = cx;
+        this.cenPosY = cy;
         this.width = w;
         this.height = h;
         this.styling = s;
@@ -24,16 +24,16 @@ class Shape {
     }
 
     public draw = () => {
-        return this.strategy.draw(this.uuid, this.posX, this.posY, this.width, this.height, this.styling);
+        return this.strategy.draw(this.uuid, this.cenPosX, this.cenPosY, this.width, this.height, this.styling);
     }
 
     public updatePosition = (x: number, y: number) => {
-        this.posX = x;
-        this.posY = y;
+        this.cenPosX = x;
+        this.cenPosY = y;
     }
 
     public getPosition(): number[]{
-        return [this.posX, this.posY];
+        return [this.cenPosX, this.cenPosY];
     }
 }
 

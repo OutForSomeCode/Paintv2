@@ -12,13 +12,12 @@ class Polygon extends React.Component<any, any> {
 
         function drag() {
             const commands = Commands.getCommands();
-            let test: number[] = shape.points;
-            let width = test[2] - test[0];
-            let height = test[5] - test[1];
+            let width = shape.width;
+            let height = shape.height;
             let pos = {
-                x: 0,
-                y: 0
-            }
+                x: shape.cx,
+                y: shape.cy
+            };
 
             function dragStarted() {
                 // @ts-ignore
@@ -32,14 +31,14 @@ class Polygon extends React.Component<any, any> {
                 let plb = [pos.x + (width / 2), pos.y + (height / 2)];
                 let prb = [pos.x - (width / 2), pos.y + (height / 2)];
                 let ptm = [pos.x, pos.y - (height / 2)];
-                let t = [plb, prb, ptm];
+                let newPoints = [plb, prb, ptm];
 
                 // @ts-ignore
-                d3.select(this).attr("points", t.toString());
+                d3.select(this).attr("points", newPoints.toString());
             }
 
             function dragEnded() {
-                commands.push(new UpdateShapePosition(shapeID, pos.x + width / 2, pos.y + height / 2));
+                commands.push(new UpdateShapePosition(shapeID, pos.x, pos.y));
 
                 // @ts-ignore
                 d3.select(this).style("stroke", "#000000");

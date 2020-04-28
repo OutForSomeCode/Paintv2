@@ -6,13 +6,16 @@ const d3 = require("d3");
 
 class Ellipse extends React.Component<any, any> {
     componentDidMount(): void {
+        const shape = this.props;
         const shapeID = this.props.id.toString();
         d3.select(findDOMNode(this)).call(drag());
 
         function drag() {
             const commands = Commands.getCommands();
-            let x: number;
-            let y: number;
+            let pos = {
+                x: shape.cx,
+                y: shape.cy
+            }
 
             function dragStarted() {
                 // @ts-ignore
@@ -20,21 +23,22 @@ class Ellipse extends React.Component<any, any> {
             }
 
             function dragging() {
-                x = d3.event.x;
-                y = d3.event.y;
+                pos.x = d3.event.x;
+                pos.y = d3.event.y;
 
                 // @ts-ignore
                 d3.select(this).attr("cx", d3.event.x).attr("cy", d3.event.y);
             }
 
             function dragEnded() {
-                commands.push(new UpdateShapePosition(shapeID, x, y));
+                commands.push(new UpdateShapePosition(shapeID, pos.x, pos.y));
 
                 // @ts-ignore
                 d3.select(this).style("stroke", "#000000");
             }
 
             return d3.drag()
+                .subject(function () {return pos})
                 .on("start", dragStarted)
                 .on("drag", dragging)
                 .on("end", dragEnded);

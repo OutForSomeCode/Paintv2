@@ -1,3 +1,3 @@
 export interface IShape {
-    draw(index: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: any): any;
+    draw(index: number, cenPosX: number, cenPosY: number, width: number, height: number, style: any): any;
 }
