@@ -6,7 +6,6 @@ import {Commands} from "./Commands";
 import Grid from "@material-ui/core/Grid";
 
 export default function History({shapeUpdate}: {shapeUpdate: any}) {
-    //{shapeUpdate}: {shapeUpdate: any}
     const _commands = Commands.getInstance();
 
     function updateCanvas() {

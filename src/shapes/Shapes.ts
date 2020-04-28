@@ -1,9 +1,8 @@
-import {Shape} from "./Shape";
+import {IShapeGroup} from "./IShapeGroup";
 
 class Shapes {
     private static _instance: Shapes;
-    private _shapeArray: Shape[] = [];
-app: any
+    private _shapeArray: IShapeGroup[] = [];
 
     private constructor() {
     }
@@ -16,25 +15,25 @@ app: any
     }
 
     // for saving all shape data
-    get shapeArray(): Shape[] {
+    get shapeArray(): IShapeGroup[] {
         return this._shapeArray;
     }
 
     // for loading all shape data
-    set shapeArray(value: Shape[]) {
+    set shapeArray(value: IShapeGroup[]) {
         this._shapeArray = value;
     }
 
-    public add = (shape: Shape): void => {
-        this._shapeArray.push(shape);
+    public add = (item: IShapeGroup): void => {
+        this._shapeArray.push(item);
     }
 
-    public remove = (uuid: any): Shape[] => {
+    public remove = (uuid: any): IShapeGroup[] => {
         return this._shapeArray.splice(this._shapeArray.indexOf(this.get(uuid)), 1);
     }
 
-    public get = (uuid: any): Shape => {
-        return this._shapeArray.find((shape: Shape) => shape.getUuid() === uuid) as Shape;
+    public get = (uuid: any): IShapeGroup => {
+        return this._shapeArray.find((item: IShapeGroup) => item.getUuid() === uuid) as IShapeGroup;
     }
 }
 export {Shapes}

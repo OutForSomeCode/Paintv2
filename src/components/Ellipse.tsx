@@ -1,6 +1,6 @@
 import React from "react";
 import {Commands} from "../controls/Commands";
-import {UpdateShapePosition} from "../controls/UpdateShapePosition";
+import {UpdateItemPosition} from "../controls/UpdateItemPosition";
 import {findDOMNode} from "react-dom";
 import {Vector2} from "../utility/Vector2";
 

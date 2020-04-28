@@ -15,6 +15,8 @@ import {SharedShapeData} from "./shapes/SharedShapeData";
 import {Commands} from "./controls/Commands";
 import IOMenu from "./IO/Menu";
 import {from} from "rxjs";
+import {Canvas} from "./components/Canvas";
+import {IShapeGroup} from "./shapes/IShapeGroup";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -44,31 +46,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function App() {
-    const svgCanvas = React.createRef<SVGSVGElement>();
     const shapeInstance = Shapes.getInstance();
-    const commandInstance = Commands.getInstance();
     const classes = useStyles();
     const [shapeArray, setShapes] = React.useState({shapes: shapeInstance.shapeArray});
 
     function update(): void {
         setShapes({shapes: shapeInstance.shapeArray});
-    }
-
-    function addShape(event: { clientX: number; clientY: number; }): any {
-        let offset = svgCanvas.current!.getBoundingClientRect();
-        commandInstance.push(
-            new CreateShape(
-                new Shape(
-                    SharedShapeData.type,
-                    event.clientX - offset.left,
-                    event.clientY - offset.top,
-                    SharedShapeData.width,
-                    SharedShapeData.height,
-                    SharedShapeData.styling
-                )
-            )
-        );
-        update();
     }
 
     return (
@@ -86,11 +69,11 @@ function App() {
             </Grid>
             <Grid item xs>
                 <Paper className={classes.test} elevation={2}>
-                    <svg className="fullSize" ref={svgCanvas} onClick={addShape}>
-                        {shapeArray.shapes.map((shape: Shape) => (
-                            shape.draw()
+                    <Canvas shapeUpdate={update}>
+                        {shapeArray.shapes.map((item: IShapeGroup) => (
+                            item.draw()
                         ))}
-                    </svg>
+                    </Canvas>
                 </Paper>
             </Grid>
         </Grid>
