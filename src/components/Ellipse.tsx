@@ -1,23 +1,21 @@
 import React from "react";
-import {findDOMNode} from "react-dom";
 import {Commands} from "../controls/Commands";
 import {UpdateShapePosition} from "../controls/UpdateShapePosition";
+import {findDOMNode} from "react-dom";
 const d3 = require("d3");
 
-class Polygon extends React.Component<any, any> {
+class Ellipse extends React.Component<any, any> {
     componentDidMount(): void {
         const shape = this.props;
-        const shapeID = shape.id.toString();
+        const shapeID = this.props.id.toString();
         d3.select(findDOMNode(this)).call(drag());
 
         function drag() {
             const commands = Commands.getCommands();
-            let width = shape.width;
-            let height = shape.height;
             let pos = {
                 x: shape.cx,
                 y: shape.cy
-            };
+            }
 
             function dragStarted() {
                 // @ts-ignore
@@ -28,13 +26,8 @@ class Polygon extends React.Component<any, any> {
                 pos.x = d3.event.x;
                 pos.y = d3.event.y;
 
-                let plb = [pos.x + (width / 2), pos.y + (height / 2)];
-                let prb = [pos.x - (width / 2), pos.y + (height / 2)];
-                let ptm = [pos.x, pos.y - (height / 2)];
-                let newPoints = [plb, prb, ptm];
-
                 // @ts-ignore
-                d3.select(this).attr("points", newPoints.toString());
+                d3.select(this).attr("cx", d3.event.x).attr("cy", d3.event.y);
             }
 
             function dragEnded() {
@@ -51,9 +44,11 @@ class Polygon extends React.Component<any, any> {
                 .on("end", dragEnded);
         }
     }
+
     render() {
-        return <polygon {...this.props}/>;
+        return <ellipse {...this.props}/>;
     }
 }
 
-export {Polygon}
+export {Ellipse}
+

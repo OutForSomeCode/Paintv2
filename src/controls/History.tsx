@@ -10,7 +10,7 @@ export default function History({shapeUpdate}: {shapeUpdate: any}) {
     const _commands = Commands.getCommands();
 
     function updateCanvas() {
-        shapeUpdate()
+        shapeUpdate();
     }
 
     function undoButton() {

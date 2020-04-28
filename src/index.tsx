@@ -50,7 +50,6 @@ function App() {
 
     function update(): void {
         setShapes({shapes: _shapes.shapeArray});
-        console.log(shapeArray);
     }
 
     function addShape(event: { clientX: number; clientY: number; }): any {
