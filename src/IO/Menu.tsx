@@ -7,7 +7,7 @@ export default function IOMenu() {
             <button onClick={() => FileIO.Save()}>
                 Save
             </button>
-            <button>
+            <button onClick={() => FileIO.Load()}>
                 Load
             </button>
         </div>

@@ -14,6 +14,7 @@ import {CreateShape} from "./controls/CreateShape";
 import {SharedShapeData} from "./shapes/SharedShapeData";
 import {Commands} from "./controls/Commands";
 import IOMenu from "./IO/Menu";
+import {from} from "rxjs";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -71,7 +72,7 @@ function App() {
     }
 
     return (
-        <Grid className={_classes.root} container spacing={1}>
+        <Grid className={_classes.root} container spacing={1} onClick={()=> update()}>
             <IOMenu/>
             <Grid item>
                 <Grid className={_classes.test} container direction={"column"}>

@@ -7,5 +7,8 @@ export class Vector2 {
         this.y = y;
     }
 
+    toString(): string {
+        return `Vector2(${this.x}, ${this.y})`
+    }
 }
 

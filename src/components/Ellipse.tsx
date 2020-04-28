@@ -2,6 +2,8 @@ import React from "react";
 import {Commands} from "../controls/Commands";
 import {UpdateShapePosition} from "../controls/UpdateShapePosition";
 import {findDOMNode} from "react-dom";
+import {Vector2} from "../utility/Vector2";
+
 const d3 = require("d3");
 
 class Ellipse extends React.Component<any, any> {
@@ -12,10 +14,7 @@ class Ellipse extends React.Component<any, any> {
 
         function drag() {
             const commands = Commands.getCommands();
-            let pos = {
-                x: shape.cx,
-                y: shape.cy
-            }
+            let pos = new Vector2(shape.cx, shape.cy);
 
             function dragStarted() {
                 // @ts-ignore
@@ -38,7 +37,9 @@ class Ellipse extends React.Component<any, any> {
             }
 
             return d3.drag()
-                .subject(function () {return pos})
+                .subject(function () {
+                    return pos
+                })
                 .on("start", dragStarted)
                 .on("drag", dragging)
                 .on("end", dragEnded);

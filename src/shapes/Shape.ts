@@ -9,19 +9,19 @@ class Shape {
 
     private strategy: IShape;
     private cenPos: Vector2;
-    private size: Vector2;
+    private _size: Vector2;
     private styling: CSSProperties;
 
     constructor(strategy: IShape, cx: number, cy: number, w: number, h: number, s: CSSProperties) {
         this.strategy = strategy;
         this.cenPos = new Vector2(cx, cy);
-        this.size = new Vector2(w, h);
+        this._size = new Vector2(w, h);
         this.styling = s;
         this.uuid = uuid();
     }
 
     public draw = () => {
-        return this.strategy.draw(this.uuid, this.cenPos, this.size, this.styling);
+        return this.strategy.draw(this.uuid, this.cenPos, this._size, this.styling);
     }
 
     public updatePosition = (p: Vector2) => {
@@ -34,6 +34,10 @@ class Shape {
 
     getType() {
         return this.strategy.getType();
+    }
+
+    getsize(): Vector2 {
+        return this._size;
     }
 }
 
