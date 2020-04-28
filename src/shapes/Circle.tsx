@@ -1,12 +1,16 @@
 import React, {CSSProperties} from "react";
 import {Ellipse} from "../components/Ellipse";
 import {IShape} from "./IShape";
+import {Vector2} from "../utility/Vector2";
 
 class Circle implements IShape {
-    draw(index: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: CSSProperties): any {
-        let crossSection = (width + height) / 4;
-        // @ts-ignore
-        return <Ellipse key={index} id={index} cx={xCenterPos} cy={yCenterPos} rx={crossSection} ry={crossSection} style={style}/>;
+    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties){
+        let crossSection = (size.x + size.y) / 4;
+        return <Ellipse key={index} id={index} cx={CenterPos.x} cy={CenterPos.y} rx={crossSection} ry={crossSection} style={style}/>;
+    }
+
+    getType(): string {
+        return "Circle";
     }
 }
 

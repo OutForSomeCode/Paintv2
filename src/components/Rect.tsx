@@ -2,6 +2,8 @@ import React from "react";
 import {findDOMNode} from "react-dom";
 import {Commands} from "../controls/Commands";
 import {UpdateShapePosition} from "../controls/UpdateShapePosition";
+import {Vector2} from "../utility/Vector2";
+
 const d3 = require("d3");
 
 class Rect extends React.Component<any, any> {
@@ -12,10 +14,7 @@ class Rect extends React.Component<any, any> {
 
         function drag() {
             const commands = Commands.getCommands();
-            let pos = {
-                x: shape.x,
-                y: shape.y
-            }
+            let pos = new Vector2(shape.cx, shape.cy);
 
             function dragStarted() {
                 // @ts-ignore
@@ -31,14 +30,18 @@ class Rect extends React.Component<any, any> {
             }
 
             function dragEnded() {
-                commands.push(new UpdateShapePosition(shapeID, pos.x + shape.width / 2, pos.y + shape.height / 2));
+                commands.push(new UpdateShapePosition(shapeID,
+                    new Vector2(pos.x + shape.width / 2, pos.y + shape.height / 2)
+                ));
 
                 // @ts-ignore
                 d3.select(this).style("stroke", "#000000");
             }
 
             return d3.drag()
-                .subject(function () {return pos})
+                .subject(function () {
+                    return pos
+                })
                 .on("start", dragStarted)
                 .on("drag", dragging)
                 .on("end", dragEnded);

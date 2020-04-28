@@ -3,6 +3,7 @@ import {Shape} from "./Shape";
 class Shapes {
     private static _instance: Shapes;
     private _shapeArray: Shape[] = [];
+app: any
 
     private constructor() {
     }

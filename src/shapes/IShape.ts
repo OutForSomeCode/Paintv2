@@ -1,3 +1,6 @@
+import {Vector2} from "../utility/Vector2";
+
 export interface IShape {
-    draw(index: number, cenPosX: number, cenPosY: number, width: number, height: number, style: any): any;
+    getType(): string;
+    draw(index: number, cenPos: Vector2, size: Vector2, style: any): any;
 }

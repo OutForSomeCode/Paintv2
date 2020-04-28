@@ -1,11 +1,15 @@
 import React, {CSSProperties} from "react";
 import {Ellipse} from "../components/Ellipse";
 import {IShape} from "./IShape";
+import {Vector2} from "../utility/Vector2";
 
 class Elliptic implements IShape {
-    draw(index: number, xCenterPos: number, yCenterPos: number, width: number, height: number, style: CSSProperties): any {
-        // @ts-ignore
-        return <Ellipse key={index} id={index} cx={xCenterPos} cy={yCenterPos} rx={width / 2} ry={height / 2} style={style}/>;
+    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties){
+        return <Ellipse key={index} id={index} cx={CenterPos.x} cy={CenterPos.y} rx={size.x / 2} ry={size.y / 2} style={style}/>;
+    }
+
+    getType(): string {
+        return "Elliptic";
     }
 }
 

@@ -1,33 +1,29 @@
 import {Shapes} from "../shapes/Shapes";
 import {Shape} from "../shapes/Shape";
 import {ICommand} from "./ICommand";
+import {Vector2} from "../utility/Vector2";
 
 class UpdateShapePosition implements ICommand {
     private shapes = Shapes.getShapes();
     private shape: Shape;
-    private oldPosX: number;
-    private oldPosY: number;
-    private newPosX: number;
-    private newPosY: number;
+    private oldPos: Vector2;
+    private newPos: Vector2;
 
-    constructor(uuid: any, x: number, y: number) {
+    constructor(uuid: any, pos: Vector2) {
         this.shape = this.shapes.get(uuid);
-        this.newPosX = x;
-        this.newPosY = y;
-        let oldPosition = this.shape.getPosition();
-        this.oldPosX = oldPosition[0];
-        this.oldPosY = oldPosition[1];
+        this.newPos = pos;
+        this.oldPos = this.shape.getPosition();
     }
 
     execute = (): boolean => {
         // adds posX, posY values to current position
-        this.shape.updatePosition(this.newPosX, this.newPosY);
+        this.shape.updatePosition(this.newPos);
         return true;
     }
 
     undo = (): void => {
         // subtracts posX, posY values from current position
-        this.shape.updatePosition(this.oldPosX, this.oldPosY);
+        this.shape.updatePosition(this.oldPos);
     }
 }
 
