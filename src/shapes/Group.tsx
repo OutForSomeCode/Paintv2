@@ -1,5 +1,4 @@
 import React from "react";
-import {Shape} from "./Shape";
 import {Shapes} from "./Shapes";
 import {G} from "../components/G";
 import {IShapeGroup} from "./IShapeGroup";
@@ -10,10 +9,10 @@ class Group implements IShapeGroup {
     private readonly _uuid: any = null;
     private _cenPosX: number;
     private _cenPosY: number;
-    private _shapes: IShapeGroup;
+    private _shapes: IShapeGroup[];
     private _shapeInstance = Shapes.getInstance();
 
-    constructor(items: IShapeGroup, cx: number, cy: number) {
+    constructor(items: IShapeGroup[], cx: number, cy: number) {
         this._shapes = items;
         this._cenPosX = cx;
         this._cenPosY = cy;
@@ -22,8 +21,8 @@ class Group implements IShapeGroup {
 
     draw = (): any => {
         return <G key={this._uuid} id={this._uuid}>
-            {this._shapes.map((shape: Shape) => (
-                shape.draw()
+            {this._shapes.map((item: IShapeGroup) => (
+                item.draw()
             ))}
         </G>
     }
