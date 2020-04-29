@@ -2,20 +2,19 @@ import React from "react";
 import {Shapes} from "./Shapes";
 import {G} from "../components/G";
 import {IShapeGroup} from "./IShapeGroup";
+import {Vector2} from "../utility/Vector2";
 
 const uuid = require('react-uuid');
 
 class Group implements IShapeGroup {
     private readonly _uuid: any = null;
-    private _cenPosX: number;
-    private _cenPosY: number;
+    private _cenPos: Vector2;
     private _shapes: IShapeGroup[];
     private _shapeInstance = Shapes.getInstance();
 
-    constructor(items: IShapeGroup[], cx: number, cy: number) {
+    constructor(items: IShapeGroup[], c: Vector2) {
         this._shapes = items;
-        this._cenPosX = cx;
-        this._cenPosY = cy;
+        this._cenPos = c;
         this._uuid = uuid();
     }
 
@@ -27,13 +26,12 @@ class Group implements IShapeGroup {
         </G>
     }
 
-    public updatePosition = (x: number, y: number) => {
-        this._cenPosX = x;
-        this._cenPosY = y;
+    public updatePosition = (p: Vector2) => {
+        this._cenPos = p;
     }
 
-    getPosition(): number[] {
-        return [this._cenPosX, this._cenPosY];
+    getPosition(): Vector2 {
+        return this._cenPos;
     }
 
     getUuid(): any {
@@ -48,6 +46,14 @@ class Group implements IShapeGroup {
 
     remove(): void {
 
+    }
+
+    getSize(): Vector2 {
+        return new Vector2(0,0);
+    }
+
+    getType(): string {
+        return "Group";
     }
 }
 

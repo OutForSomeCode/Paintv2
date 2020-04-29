@@ -59,17 +59,17 @@ class FileIO {
                 }
                 list.push(new Shape(i, r[0], r[1], r[2], r[3], styling))
             });
-        Shapes.getShapes().shapeArray = list;
+        Shapes.getInstance().shapeArray = list;
     }
 
     static Save() {
         const doc = new YAML.Document()
         let root = new YAMLSeq();
 
-        Shapes.getShapes().shapeArray.forEach(
+        Shapes.getInstance().shapeArray.forEach(
             (a) => {
                 let p = a.getPosition();
-                let s = a.getsize();
+                let s = a.getSize();
                 root.items.push(
                     new Pair(a.getType(), sprintf(format, p.x, p.y, s.x, s.y))
                 )

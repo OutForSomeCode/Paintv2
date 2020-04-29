@@ -32,7 +32,7 @@ class Ellipse extends React.Component<any, any> {
             }
 
             function dragEnded() {
-                commands.push(new UpdateItemPosition(shapeID, pos.x, pos.y));
+                commands.push(new UpdateItemPosition(shapeID, pos));
 
                 // @ts-ignore
                 d3.select(this).style("stroke", "#000000");

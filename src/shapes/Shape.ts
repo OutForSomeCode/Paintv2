@@ -1,18 +1,12 @@
 import {CSSProperties} from 'react'
 import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
+import {IShapeGroup} from "./IShapeGroup";
 
 const uuid = require('react-uuid');
 
 class Shape implements IShapeGroup {
     private readonly _uuid: any = null;
-    private _strategy: IShape;
-    private _cenPosX: number;
-    private _cenPosY: number;
-    private _width: number;
-    private _height: number;
-    private _styling: CSSProperties;
-
     private strategy: IShape;
     private cenPos: Vector2;
     private _size: Vector2;
@@ -23,11 +17,11 @@ class Shape implements IShapeGroup {
         this.cenPos = new Vector2(cx, cy);
         this._size = new Vector2(w, h);
         this.styling = s;
-        this.uuid = uuid();
+        this._uuid = uuid();
     }
 
     public draw = () => {
-        return this.strategy.draw(this.uuid, this.cenPos, this._size, this.styling);
+        return this.strategy.draw(this._uuid, this.cenPos, this._size, this.styling);
     }
 
     public updatePosition = (p: Vector2) => {
@@ -42,7 +36,7 @@ class Shape implements IShapeGroup {
         return this.strategy.getType();
     }
 
-    getsize(): Vector2 {
+    getSize(): Vector2 {
         return this._size;
     }
 
@@ -52,4 +46,3 @@ class Shape implements IShapeGroup {
 }
 
 export {Shape}
-
