@@ -13,10 +13,7 @@ class Ellipse extends React.Component<any, any> {
 
         function drag() {
             const commands = Commands.getInstance();
-            let pos = {
-                x: shape.cx,
-                y: shape.cy
-            }
+            let pos = new Vector2(shape.cx,shape.cy);
 
             function dragStarted() {
                 // @ts-ignore
