@@ -1,7 +1,7 @@
 import React from "react";
 import {findDOMNode} from "react-dom";
 import {Commands} from "../controls/Commands";
-import {UpdateShapePosition} from "../controls/UpdateShapePosition";
+import {UpdateItemPosition} from "../controls/UpdateItemPosition";
 import {Vector2} from "../utility/Vector2";
 
 const d3 = require("d3");
@@ -23,7 +23,7 @@ function makeDraggable(comp: React.Component) {
             translate = new Vector2(d3.event.x, d3.event.y)
             me.attr('transform', transform);
         }).on('end', function () {
-            commands.push(new UpdateShapePosition(node.id, translate));
+            commands.push(new UpdateItemPosition(node.id, translate));
         });
     handleDrag(d3.select(node));
 }

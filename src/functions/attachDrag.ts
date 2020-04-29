@@ -2,16 +2,14 @@ import {Commands} from "../controls/Commands";
 import {UpdateItemPosition} from "../controls/UpdateItemPosition";
 import React from "react";
 import {findDOMNode} from "react-dom";
+import {Vector2} from "../utility/Vector2";
 
 const d3 = require("d3");
 
 export default function attachDrag(comp: React.Component) {
     const node: any = findDOMNode(comp);
     const commands = Commands.getInstance();
-    let position = {
-        x: 0,
-        y: 0
-    }
+    let position = new Vector2(0,0)
 
     function startDragging() {
         // @ts-ignore
@@ -28,7 +26,7 @@ export default function attachDrag(comp: React.Component) {
     }
 
     function endDragging() {
-        commands.push(new UpdateItemPosition(node.id, position.x, position.y));
+        commands.push(new UpdateItemPosition(node.id, position));
 
         // @ts-ignore
         d3.select(this).style("stroke", "#000000");

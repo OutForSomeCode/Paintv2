@@ -1,7 +1,7 @@
 import React from "react";
 import {findDOMNode} from "react-dom";
 import {Commands} from "../controls/Commands";
-import {UpdateShapePosition} from "../controls/UpdateShapePosition";
+import {UpdateItemPosition} from "../controls/UpdateItemPosition";
 import {Vector2} from "../utility/Vector2";
 const d3 = require("d3");
 
@@ -36,7 +36,7 @@ class Polygon extends React.Component<any, any> {
             }
 
             function dragEnded() {
-                commands.push(new UpdateShapePosition(shapeID, pos));
+                commands.push(new UpdateItemPosition(shapeID, pos));
 
                 // @ts-ignore
                 d3.select(this).style("stroke", "#000000");
