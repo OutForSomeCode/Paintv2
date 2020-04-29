@@ -10,13 +10,13 @@ import ShapeSelect from "./controls/ShapeSelect";
 import ShapeSizeInput from "./controls/ShapeSizeInput";
 import {ShapeStyleInput} from "./controls/ShapeStyleInput";
 import {Shape} from "./shapes/Shape";
-import {CreateShape} from "./controls/CreateShape";
 import {SharedShapeData} from "./shapes/SharedShapeData";
-import {Commands} from "./controls/Commands";
-import IOMenu from "./IO/Menu";
-import {from} from "rxjs";
+import IOMenu from "./controls/SaveLoad";
 import {Canvas} from "./components/Canvas";
 import {IShapeGroup} from "./shapes/IShapeGroup";
+import {Group} from "./shapes/Group";
+import {Circle} from "./shapes/Circle";
+import {Square} from "./shapes/Square";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -47,6 +47,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function App() {
     const shapeInstance = Shapes.getInstance();
+    shapeInstance.add(new Group([
+        new Shape(new Circle(), 50,50, 50,50, SharedShapeData.styling),
+        new Shape(new Square(), 100, 100, 50, 50, SharedShapeData.styling),
+        // new Group([
+        //     new Shape(new Circle(), 50,100, 50,50, SharedShapeData.styling),
+        //     new Shape(new Square(), 100, 150, 50, 50, SharedShapeData.styling)
+        // ])
+    ]));
     const classes = useStyles();
     const [shapeArray, setShapes] = React.useState({shapes: shapeInstance.shapeArray});
 
@@ -71,7 +79,7 @@ function App() {
                 <Paper className={classes.test} elevation={2}>
                     <Canvas shapeUpdate={update}>
                         {shapeArray.shapes.map((item: IShapeGroup) => (
-                            item.draw()
+                            item.draw(false)
                         ))}
                     </Canvas>
                 </Paper>

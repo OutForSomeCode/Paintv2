@@ -6,7 +6,7 @@ import {Vector2} from "../utility/Vector2";
 
 const d3 = require("d3");
 
-export default function attachDrag(comp: React.Component) {
+export default function GDrag(comp: React.Component) {
     const node: any = findDOMNode(comp);
     const commands = Commands.getInstance();
     let position = new Vector2(0,0)
@@ -26,7 +26,7 @@ export default function attachDrag(comp: React.Component) {
     }
 
     function endDragging() {
-        commands.push(new UpdateItemPosition(node.id, position));
+        //commands.push(new UpdateItemPosition(node.id, position));
 
         // @ts-ignore
         d3.select(this).style("stroke", "#000000");

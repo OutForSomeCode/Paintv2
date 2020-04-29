@@ -1,5 +1,5 @@
 import React from "react";
-import {FileIO} from "./FileIO";
+import {FileIO} from "../IO/FileIO";
 import {Button} from "@material-ui/core";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import SaveIcon from '@material-ui/icons/Save';
@@ -11,12 +11,12 @@ export default function IOMenu({shapeUpdate}: {shapeUpdate: any}) {
     }
 
     function save() {
-        FileIO.Save();
+        FileIO.getInstance().Save();
         updateCanvas();
     }
 
     function load() {
-        FileIO.Load();
+        FileIO.getInstance().Load();
         updateCanvas();
     }
 

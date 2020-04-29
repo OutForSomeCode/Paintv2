@@ -4,8 +4,17 @@ import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
 
 class Elliptic implements IShape {
-    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties){
-        return <Ellipse key={index} id={index} cx={CenterPos.x} cy={CenterPos.y} rx={size.x / 2} ry={size.y / 2} style={style}/>;
+    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean){
+        return <Ellipse
+            key={index}
+            id={index}
+            cx={CenterPos.x}
+            cy={CenterPos.y}
+            rx={size.x / 2}
+            ry={size.y / 2}
+            style={style}
+            ingroup={inGroup}
+        />;
     }
 
     getType(): string {

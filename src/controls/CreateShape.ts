@@ -16,7 +16,7 @@ class CreateShape implements ICommand {
     }
 
     undo(): void {
-        this._shapeInstance.remove(this._shape.getUuid());
+        this._shapeInstance.remove(this._shape.getObjectData().id);
     }
 }
 

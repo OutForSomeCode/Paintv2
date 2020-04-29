@@ -1,9 +1,19 @@
 import React from "react";
-import attachDrag from "../functions/attachDrag";
+import GDrag from "../functions/GDrag";
 
 class G extends React.Component<any, any> {
     componentDidMount(): void {
-        attachDrag(this);
+        this.enableDragging(this.props.ingroup);
+    }
+
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
+        this.enableDragging(this.props.ingroup);
+    }
+
+    enableDragging(inGroup: boolean) {
+        if (inGroup)
+            return;
+        GDrag(this);
     }
 
     render() {

@@ -12,7 +12,7 @@ class UpdateItemPosition implements ICommand {
     constructor(uuid: any, pos: Vector2) {
         this.shape = this.shapes.get(uuid);
         this.newPos = pos;
-        this.oldPos = this.shape.getPosition();
+        this.oldPos = this.shape.getObjectData().pos;
     }
 
     execute = (): boolean => {
