@@ -1,12 +1,9 @@
 import {Vector2} from "../utility/Vector2";
+import {IVisitor} from "../visitor/IVisitor";
 
 export interface IShapeGroup {
-    draw(): any;
+    draw(inGroup: boolean): any;
     updatePosition(pos: Vector2): void;
-    getPosition(): Vector2;
-    getUuid(): any;
-
-    getSize(): Vector2;
-
-    getType(): string;
+    getObjectData(): any
+    acceptVisitor(v: IVisitor): void;
 }

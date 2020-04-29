@@ -2,6 +2,7 @@ import {CSSProperties} from 'react'
 import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
 import {IShapeGroup} from "./IShapeGroup";
+import {IVisitor} from "../visitor/IVisitor";
 
 const uuid = require('react-uuid');
 
@@ -20,28 +21,27 @@ class Shape implements IShapeGroup {
         this._uuid = uuid();
     }
 
-    public draw = () => {
-        return this.strategy.draw(this._uuid, this.cenPos, this._size, this.styling);
+    public draw = (inGroup: boolean) => {
+        return this.strategy.draw(this._uuid, this.cenPos, this._size, this.styling, inGroup);
     }
 
+    // visitor specific?
     public updatePosition = (p: Vector2) => {
         this.cenPos = p;
     }
 
-    public getPosition(): Vector2{
-        return this.cenPos;
+    public getObjectData(): any{
+        return {
+            id: this._uuid,
+            pos: this.cenPos,
+            size: this._size,
+            style: this.styling,
+            strategy: this.strategy.getType()
+        };
     }
 
-    getType() {
-        return this.strategy.getType();
-    }
-
-    getSize(): Vector2 {
-        return this._size;
-    }
-
-    public getUuid(): any{
-        return this._uuid;
+    acceptVisitor(v: IVisitor): void {
+        v.visitShape(this);
     }
 }
 

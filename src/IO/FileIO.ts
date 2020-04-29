@@ -1,18 +1,15 @@
-import YAML, {AST} from 'yaml'
+import YAML from 'yaml'
 import {Shapes} from "../shapes/Shapes";
-import {Pair, Scalar, YAMLMap, YAMLSeq} from "yaml/types";
-import {Vector2} from "../utility/Vector2";
-import {SharedShapeData} from "../shapes/SharedShapeData";
+import {Scalar, YAMLMap, YAMLSeq} from "yaml/types";
 import {Circle} from "../shapes/Circle";
 import {Square} from "../shapes/Square";
 import {Rectangle} from "../shapes/Ractangle";
 import {Triangle} from "../shapes/Triangle";
 import {Shape} from "../shapes/Shape";
-import {IShape} from "../shapes/IShape";
 import {CSSProperties} from "react";
 // @ts-ignore
 import *  as scanf from 'sscanf'
-import {sprintf} from "sprintf-js";
+import {SaveVisitor} from "../visitor/SaveVisitor";
 
 let format = "%f, %f, %f, %f";
 
@@ -23,12 +20,28 @@ let styling: CSSProperties = {
 
 class FileIO {
     // https://eemeli.org/yaml/#working-with-anchors
+    private static _instance: FileIO;
+    private _root = new YAMLSeq();
 
-    static Load() {
+    private constructor() {
+    }
+
+    public static getInstance() :FileIO {
+        if(!FileIO._instance){
+            FileIO._instance = new FileIO();
+        }
+        return FileIO._instance;
+    }
+
+    public getRoot(): any{
+        return this._root;
+    }
+
+    public Load() {
         const src = localStorage.getItem('Draw');
         if (src == null) return;
         const doc = YAML.parseDocument(src)
-        const {anchors, contents} = doc
+        const {contents} = doc
         if (contents instanceof Scalar) return;
 
         let list: any[] = [];
@@ -36,48 +49,45 @@ class FileIO {
         // @ts-ignore
         contents.items.forEach(
             (a: YAMLMap) => {
-                var r = scanf(a.items[0].value.value, format);
+                const parsedData = scanf(a.items[0].value.value, format);
                 console.log(a.items[0].value)
-                let i: any;
+                let type: any;
 
                 switch (a.items[0].key.toString()) {
                     case "Circle":
-                        i = new Circle()
+                        type = new Circle()
                         break;
                     case "Square":
-                        i = new Square()
+                        type = new Square()
                         break;
                     case "Rectangle":
-                        i = new Rectangle()
+                        type = new Rectangle()
                         break;
                     case "Triangle":
-                        i = new Triangle()
+                        type = new Triangle()
                         break;
                     default:
                         throw new Error(`Unknown type: ${a.items[0].key}`)
 
                 }
-                list.push(new Shape(i, r[0], r[1], r[2], r[3], styling))
+                list.push(new Shape(type, parsedData[0], parsedData[1], parsedData[2], parsedData[3], styling))
             });
         Shapes.getInstance().shapeArray = list;
     }
 
-    static Save() {
-        const doc = new YAML.Document()
-        let root = new YAMLSeq();
+    public Save() {
+        const doc = new YAML.Document();
+        const saveData = new SaveVisitor();
+        this._root = new YAMLSeq();
 
         Shapes.getInstance().shapeArray.forEach(
             (a) => {
-                let p = a.getPosition();
-                let s = a.getSize();
-                root.items.push(
-                    new Pair(a.getType(), sprintf(format, p.x, p.y, s.x, s.y))
-                )
+                a.acceptVisitor(saveData);
             }
         );
 
         // @ts-ignore
-        doc.contents = root;
+        doc.contents = this._root;
 
         console.log();
         localStorage.setItem('Draw', String(doc));

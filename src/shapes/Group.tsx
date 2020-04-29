@@ -3,44 +3,35 @@ import {Shapes} from "./Shapes";
 import {G} from "../components/G";
 import {IShapeGroup} from "./IShapeGroup";
 import {Vector2} from "../utility/Vector2";
+import {IVisitor} from "../visitor/IVisitor";
 
 const uuid = require('react-uuid');
 
 class Group implements IShapeGroup {
     private readonly _uuid: any = null;
-    private _cenPos: Vector2;
-    private _shapes: IShapeGroup[];
+    private _items: IShapeGroup[];
     private _shapeInstance = Shapes.getInstance();
 
-    constructor(items: IShapeGroup[], c: Vector2) {
-        this._shapes = items;
-        this._cenPos = c;
+    constructor(items: IShapeGroup[]) {
+        this._items = items;
         this._uuid = uuid();
     }
 
-    draw = (): any => {
-        return <G key={this._uuid} id={this._uuid}>
-            {this._shapes.map((item: IShapeGroup) => (
-                item.draw()
+    draw = (inGroup: boolean): any => {
+        return <G key={this._uuid} id={this._uuid} ingroup={inGroup}>
+            {this._items.map((item: IShapeGroup) => (
+                item.draw(true)
             ))}
         </G>
     }
 
     public updatePosition = (p: Vector2) => {
-        this._cenPos = p;
-    }
-
-    getPosition(): Vector2 {
-        return this._cenPos;
-    }
-
-    getUuid(): any {
-        return this._uuid;
+        //todo
     }
 
     add(shapeUuids: any[]): void {
         shapeUuids.forEach((uuid) => {
-            this._shapes.push(this._shapeInstance.remove(uuid)[0] as IShapeGroup);
+            this._items.push(this._shapeInstance.remove(uuid)[0] as IShapeGroup);
         });
     }
 
@@ -48,12 +39,14 @@ class Group implements IShapeGroup {
 
     }
 
-    getSize(): Vector2 {
-        return new Vector2(0,0);
+    acceptVisitor(v: IVisitor): void {
+        v.visitGroup(this);
     }
 
-    getType(): string {
-        return "Group";
+    getObjectData(): any {
+        return {
+            id: this._uuid
+        }
     }
 }
 

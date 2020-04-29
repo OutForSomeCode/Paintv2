@@ -33,7 +33,7 @@ class Shapes {
     }
 
     public get = (uuid: any): IShapeGroup => {
-        return this._shapeArray.find((item: IShapeGroup) => item.getUuid() === uuid) as IShapeGroup;
+        return this._shapeArray.find((item: IShapeGroup) => item.getObjectData().id === uuid) as IShapeGroup;
     }
 }
 export {Shapes}
