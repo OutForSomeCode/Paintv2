@@ -1,11 +1,12 @@
 import {Commands} from "../controls/Commands";
 import {UpdateItemPosition} from "../controls/UpdateItemPosition";
+import React from "react";
+import {findDOMNode} from "react-dom";
 
 const d3 = require("d3");
 
-export default function attachDrag(id: any) {
-    // @ts-ignore
-    d3.select(this).attr('transform', 'translate(0, 0)')
+export default function attachDrag(comp: React.Component) {
+    const node: any = findDOMNode(comp);
     const commands = Commands.getInstance();
     let position = {
         x: 0,
@@ -27,17 +28,19 @@ export default function attachDrag(id: any) {
     }
 
     function endDragging() {
-        commands.push(new UpdateItemPosition(id, position.x, position.y));
+        commands.push(new UpdateItemPosition(node.id, position.x, position.y));
 
         // @ts-ignore
         d3.select(this).style("stroke", "#000000");
     }
 
-    return d3.drag()
+    const attach = d3.drag()
         .subject(function () {
             return position
         })
         .on("start", startDragging)
         .on("drag", dragging)
         .on("end", endDragging);
+
+    attach(d3.select(node));
 }
