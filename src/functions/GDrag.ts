@@ -1,15 +1,15 @@
 import {Commands} from "../controls/Commands";
-import {UpdateItemPosition} from "../controls/UpdateItemPosition";
 import React from "react";
 import {findDOMNode} from "react-dom";
 import {Vector2} from "../utility/Vector2";
+import {UpdateGroupPosition} from "../controls/UpdateGroupPosition";
 
 const d3 = require("d3");
 
 export default function GDrag(comp: React.Component) {
     const node: any = findDOMNode(comp);
     const commands = Commands.getInstance();
-    let position = new Vector2(0,0)
+    let position = new Vector2(0,0);
 
     function startDragging() {
         // @ts-ignore
@@ -26,10 +26,11 @@ export default function GDrag(comp: React.Component) {
     }
 
     function endDragging() {
-        //commands.push(new UpdateItemPosition(node.id, position));
-
+        let bBox = node.getBBox();
+        commands.push(new UpdateGroupPosition(node.id, bBox, position));
         // @ts-ignore
-        d3.select(this).style("stroke", "#000000");
+        d3.select(this).style("stroke", "#000000").attr('transform', null);
+        // update trigger needed!!!
     }
 
     const attach = d3.drag()

@@ -1,6 +1,6 @@
 import {findDOMNode} from "react-dom";
 import {Commands} from "../controls/Commands";
-import {UpdateItemPosition} from "../controls/UpdateItemPosition";
+import {UpdateShapePosition} from "../controls/UpdateShapePosition";
 import {Vector2} from "../utility/Vector2";
 import React from "react";
 
@@ -25,7 +25,7 @@ export default function EllipseDrag(comp: React.Component) {
     }
 
     function dragEnded() {
-        commands.push(new UpdateItemPosition(node.id, pos));
+        commands.push(new UpdateShapePosition(node.id, pos));
 
         // @ts-ignore
         d3.select(this).style("stroke", "#000000");

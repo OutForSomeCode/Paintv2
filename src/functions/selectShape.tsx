@@ -1,7 +1,5 @@
 //import React from "react";
 
-function selectShape(key: any) {
-    console.log(key);
-}
+export default function selectShape() {
 
-export {selectShape}
+}

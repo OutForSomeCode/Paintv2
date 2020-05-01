@@ -8,35 +8,35 @@ const uuid = require('react-uuid');
 
 class Shape implements IShapeGroup {
     private readonly _uuid: any = null;
-    private strategy: IShape;
-    private cenPos: Vector2;
+    private _strategy: IShape;
+    private _cenPos: Vector2;
     private _size: Vector2;
-    private styling: CSSProperties;
+    private _styling: CSSProperties;
 
     constructor(strategy: IShape, cx: number, cy: number, w: number, h: number, s: CSSProperties) {
-        this.strategy = strategy;
-        this.cenPos = new Vector2(cx, cy);
+        this._strategy = strategy;
+        this._cenPos = new Vector2(cx, cy);
         this._size = new Vector2(w, h);
-        this.styling = s;
+        this._styling = s;
         this._uuid = uuid();
     }
 
     public draw = (inGroup: boolean) => {
-        return this.strategy.draw(this._uuid, this.cenPos, this._size, this.styling, inGroup);
+        return this._strategy.draw(this._uuid, this._cenPos, this._size, this._styling, inGroup);
     }
 
     // visitor specific?
     public updatePosition = (p: Vector2) => {
-        this.cenPos = p;
+        this._cenPos = p;
     }
 
     public getObjectData(): any{
         return {
             id: this._uuid,
-            pos: this.cenPos,
+            pos: this._cenPos,
             size: this._size,
-            style: this.styling,
-            strategy: this.strategy.getType()
+            style: this._styling,
+            strategy: this._strategy.getType()
         };
     }
 

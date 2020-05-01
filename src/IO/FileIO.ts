@@ -1,5 +1,5 @@
 import YAML from 'yaml'
-import {Shapes} from "../shapes/Shapes";
+import {Items} from "../shapes/Items";
 import {Scalar, YAMLMap, YAMLSeq} from "yaml/types";
 import {Circle} from "../shapes/Circle";
 import {Square} from "../shapes/Square";
@@ -72,17 +72,17 @@ class FileIO {
                 }
                 list.push(new Shape(type, parsedData[0], parsedData[1], parsedData[2], parsedData[3], styling))
             });
-        Shapes.getInstance().shapeArray = list;
+        Items.getInstance().itemArray = list;
     }
 
     public Save() {
         const doc = new YAML.Document();
-        const saveData = new SaveVisitor();
+        const save = new SaveVisitor();
         this._root = new YAMLSeq();
 
-        Shapes.getInstance().shapeArray.forEach(
-            (a) => {
-                a.acceptVisitor(saveData);
+        Items.getInstance().itemArray.forEach(
+            (item) => {
+                item.acceptVisitor(save);
             }
         );
 

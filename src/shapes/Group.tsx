@@ -1,8 +1,7 @@
 import React from "react";
-import {Shapes} from "./Shapes";
+import {Items} from "./Items";
 import {G} from "../components/G";
 import {IShapeGroup} from "./IShapeGroup";
-import {Vector2} from "../utility/Vector2";
 import {IVisitor} from "../visitor/IVisitor";
 
 const uuid = require('react-uuid');
@@ -10,7 +9,7 @@ const uuid = require('react-uuid');
 class Group implements IShapeGroup {
     private readonly _uuid: any = null;
     private _items: IShapeGroup[];
-    private _shapeInstance = Shapes.getInstance();
+    private _shapeInstance = Items.getInstance();
 
     constructor(items: IShapeGroup[]) {
         this._items = items;
@@ -23,10 +22,6 @@ class Group implements IShapeGroup {
                 item.draw(true)
             ))}
         </G>
-    }
-
-    public updatePosition = (p: Vector2) => {
-        //todo
     }
 
     add(shapeUuids: any[]): void {
@@ -45,7 +40,8 @@ class Group implements IShapeGroup {
 
     getObjectData(): any {
         return {
-            id: this._uuid
+            id: this._uuid,
+            items: this._items
         }
     }
 }

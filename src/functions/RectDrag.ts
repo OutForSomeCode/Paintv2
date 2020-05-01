@@ -1,6 +1,6 @@
 import {findDOMNode} from "react-dom";
 import {Commands} from "../controls/Commands";
-import {UpdateItemPosition} from "../controls/UpdateItemPosition";
+import {UpdateShapePosition} from "../controls/UpdateShapePosition";
 import {Vector2} from "../utility/Vector2";
 import React from "react";
 
@@ -25,7 +25,7 @@ export default function RectDrag(comp: React.Component) {
     }
 
     function dragEnded() {
-        commands.push(new UpdateItemPosition(node.id,
+        commands.push(new UpdateShapePosition(node.id,
             new Vector2(pos.x + node.width.baseVal.value / 2, pos.y + node.height.baseVal.value / 2)
         ));
 
