@@ -4,7 +4,7 @@ import {Group} from "../shapes/Group";
 import {Vector2} from "../utility/Vector2";
 import {IShapeGroup} from "../shapes/IShapeGroup";
 
-class MoveVisitor implements IVisitor {
+class GroupMoveVisitor implements IVisitor {
     private _to: Vector2;
     private _from: Vector2;
 
@@ -34,4 +34,4 @@ class MoveVisitor implements IVisitor {
 
 }
 
-export {MoveVisitor}
+export {GroupMoveVisitor}
