@@ -1,18 +1,18 @@
 import {Items} from "../shapes/Items";
 import {ICommand} from "./ICommand";
 import {Vector2} from "../utility/Vector2";
-import {Shape} from "../shapes/Shape";
+import {IShapeGroup} from "../shapes/IShapeGroup";
 
-class UpdateShapePosition implements ICommand {
+class CommandUpdatePosition implements ICommand {
     private _items = Items.getInstance();
-    private _shape: Shape;
+    private _shape: IShapeGroup;
     private readonly _oldPos: Vector2;
     private readonly _newPos: Vector2;
 
-    constructor(uuid: any, pos: Vector2) {
-        this._shape = this._items.get(uuid) as Shape;
-        this._oldPos = new Vector2(this._shape.getObjectData().pos.x, this._shape.getObjectData().pos.y);
-        this._newPos = new Vector2(pos.x, pos.y);
+    constructor(uuid: any, translation: Vector2) {
+        this._shape = this._items.get(uuid);
+        this._oldPos = new Vector2(translation.x * -1, translation.y * -1);
+        this._newPos = new Vector2(translation.x, translation.y);
     }
 
     execute = (): boolean => {
@@ -27,4 +27,4 @@ class UpdateShapePosition implements ICommand {
     }
 }
 
-export {UpdateShapePosition}
+export {CommandUpdatePosition}

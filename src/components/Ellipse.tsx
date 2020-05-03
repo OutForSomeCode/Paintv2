@@ -1,5 +1,5 @@
 import React from "react";
-import EllipseDrag from "../functions/EllipseDrag";
+import AttachDrag from "../functions/AttachDrag";
 
 class Ellipse extends React.Component<any, any> {
     componentDidMount(): void {
@@ -13,7 +13,7 @@ class Ellipse extends React.Component<any, any> {
     enableDragging(inGroup: boolean){
         if (inGroup)
             return;
-        EllipseDrag(this);
+        AttachDrag(this, this.props.update);
     }
 
     render() {

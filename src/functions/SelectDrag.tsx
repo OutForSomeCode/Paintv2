@@ -36,7 +36,7 @@ export default function selectDrag(comp: React.Component) {
 
         d3.select("#selectionField").attr("width", Math.abs(width)).attr("height", Math.abs(height));
 
-        // add identifier class to each toplevel shape/group
+        //todo add identifier class to each toplevel shape/group
     }
 
     function endDragging() {

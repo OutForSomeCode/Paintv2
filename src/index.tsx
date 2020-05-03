@@ -46,9 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function App() {
-    const shapeInstance = Items.getInstance();
+    const itemsInstance = Items.getInstance();
 
-    // shapeInstance.add(new Group([
+    // itemsInstance.add(new Group([
     //     new Shape(new Circle(), 50, 50, 50, 50, SharedShapeData.styling),
     //     new Shape(new Square(), 100, 100, 50, 50, SharedShapeData.styling),
     //     new Group([
@@ -58,10 +58,10 @@ function App() {
     // ]));
 
     const classes = useStyles();
-    const [shapeArray, setShapes] = React.useState({shapes: shapeInstance.itemArray});
+    const [shapeArray, setShapes] = React.useState({items: itemsInstance.itemArray});
 
     function update(): void {
-        setShapes({shapes: shapeInstance.itemArray});
+        setShapes({items: itemsInstance.itemArray});
     }
 
     return (
@@ -80,8 +80,8 @@ function App() {
             <Grid item xs>
                 <Paper className={classes.test} elevation={2}>
                     <Canvas shapeUpdate={update}>
-                        {shapeArray.shapes.map((item: IShapeGroup) => (
-                            item.draw(false)
+                        {shapeArray.items.map((item: IShapeGroup) => (
+                            item.draw(false, update)
                         ))}
                     </Canvas>
                 </Paper>

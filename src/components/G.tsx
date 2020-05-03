@@ -1,5 +1,5 @@
 import React from "react";
-import GDrag from "../functions/GDrag";
+import AttachDrag from "../functions/AttachDrag";
 
 class G extends React.Component<any, any> {
     componentDidMount(): void {
@@ -13,7 +13,7 @@ class G extends React.Component<any, any> {
     enableDragging(inGroup: boolean) {
         if (inGroup)
             return;
-        GDrag(this);
+        AttachDrag(this, this.props.update);
     }
 
     render() {

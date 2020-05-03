@@ -1,5 +1,5 @@
 import React from "react";
-import RectDrag from "../functions/RectDrag";
+import AttachDrag from "../functions/AttachDrag";
 
 class Rect extends React.Component<any, any> {
     componentDidMount(): void {
@@ -13,7 +13,7 @@ class Rect extends React.Component<any, any> {
     enableDragging(inGroup: boolean){
         if (inGroup)
             return;
-        RectDrag(this);
+        AttachDrag(this, this.props.update);
     }
 
     render() {

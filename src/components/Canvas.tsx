@@ -1,5 +1,5 @@
 import React from "react";
-import {CreateShape} from "../controls/CreateShape";
+import {CommandCreateShape} from "../controls/CommandCreateShape";
 import {Shape} from "../shapes/Shape";
 import {SharedShapeData} from "../shapes/SharedShapeData";
 import {Commands} from "../controls/Commands";
@@ -17,7 +17,7 @@ class Canvas extends React.Component<any, any> {
     addShape = (event: { clientX: number; clientY: number; }): any => {
         let offset = this._svgCanvas.current!.getBoundingClientRect();
         this._commandInstance.push(
-            new CreateShape(
+            new CommandCreateShape(
                 new Shape(
                     SharedShapeData.type,
                     event.clientX - offset.left,

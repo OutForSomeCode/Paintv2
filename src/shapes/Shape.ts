@@ -21,13 +21,13 @@ class Shape implements IShapeGroup {
         this._uuid = uuid();
     }
 
-    public draw = (inGroup: boolean) => {
-        return this._strategy.draw(this._uuid, this._cenPos, this._size, this._styling, inGroup);
+    public draw = (inGroup: boolean, callback: any) => {
+        return this._strategy.draw(this._uuid, this._cenPos, this._size, this._styling, inGroup, callback);
     }
 
-    // visitor specific?
-    public updatePosition = (p: Vector2) => {
-        this._cenPos = p;
+    public updatePosition = (translation: Vector2) => {
+        this._cenPos.x += translation.x;
+        this._cenPos.y += translation.y;
     }
 
     public getObjectData(): any{
