@@ -1,5 +1,5 @@
 import React from "react";
-import PolygonDrag from "../functions/PolygonDrag";
+import AttachDrag from "../functions/AttachDrag";
 
 class Polygon extends React.Component<any, any> {
     componentDidMount(): void {
@@ -13,7 +13,7 @@ class Polygon extends React.Component<any, any> {
     enableDragging(inGroup: boolean){
         if (inGroup)
             return;
-        PolygonDrag(this);
+        AttachDrag(this, this.props.update);
     }
 
     render() {

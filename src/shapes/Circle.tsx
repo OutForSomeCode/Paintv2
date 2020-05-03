@@ -4,7 +4,7 @@ import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
 
 class Circle implements IShape {
-    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean){
+    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean, callback: () => void) {
         let crossSection = (size.x + size.y) / 4;
         return <Ellipse
             key={index}
@@ -15,6 +15,7 @@ class Circle implements IShape {
             ry={crossSection}
             style={style}
             ingroup={inGroup}
+            update={callback}
         />;
     }
 

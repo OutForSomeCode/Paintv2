@@ -3,3 +3,10 @@ html, body, .fullSize {
     height: 100%;
     margin: 0;
 }
+
+rect.selection {
+    stroke          : gray;
+    stroke-dasharray: 4px;
+    stroke-opacity  : 0.5;
+    fill            : transparent;
+}

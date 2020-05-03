@@ -4,7 +4,7 @@ import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
 
 class Elliptic implements IShape {
-    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean){
+    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean, callback: () => void) {
         return <Ellipse
             key={index}
             id={index}
@@ -14,6 +14,7 @@ class Elliptic implements IShape {
             ry={size.y / 2}
             style={style}
             ingroup={inGroup}
+            update={callback}
         />;
     }
 

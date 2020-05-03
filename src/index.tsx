@@ -4,7 +4,7 @@ import './index.css';
 import {makeStyles, createStyles, Theme} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import {Shapes} from "./shapes/Shapes";
+import {Items} from "./shapes/Items";
 import History from "./controls/History";
 import ShapeSelect from "./controls/ShapeSelect";
 import ShapeSizeInput from "./controls/ShapeSizeInput";
@@ -46,20 +46,22 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 function App() {
-    const shapeInstance = Shapes.getInstance();
-    shapeInstance.add(new Group([
-        new Shape(new Circle(), 50,50, 50,50, SharedShapeData.styling),
-        new Shape(new Square(), 100, 100, 50, 50, SharedShapeData.styling),
-        // new Group([
-        //     new Shape(new Circle(), 50,100, 50,50, SharedShapeData.styling),
-        //     new Shape(new Square(), 100, 150, 50, 50, SharedShapeData.styling)
-        // ])
-    ]));
+    const itemsInstance = Items.getInstance();
+
+    // itemsInstance.add(new Group([
+    //     new Shape(new Circle(), 50, 50, 50, 50, SharedShapeData.styling),
+    //     new Shape(new Square(), 100, 100, 50, 50, SharedShapeData.styling),
+    //     new Group([
+    //         new Shape(new Circle(), 50,100, 50,50, SharedShapeData.styling),
+    //         new Shape(new Square(), 100, 150, 50, 50, SharedShapeData.styling)
+    //     ])
+    // ]));
+
     const classes = useStyles();
-    const [shapeArray, setShapes] = React.useState({shapes: shapeInstance.shapeArray});
+    const [shapeArray, setShapes] = React.useState({items: itemsInstance.itemArray});
 
     function update(): void {
-        setShapes({shapes: shapeInstance.shapeArray});
+        setShapes({items: itemsInstance.itemArray});
     }
 
     return (
@@ -78,8 +80,8 @@ function App() {
             <Grid item xs>
                 <Paper className={classes.test} elevation={2}>
                     <Canvas shapeUpdate={update}>
-                        {shapeArray.shapes.map((item: IShapeGroup) => (
-                            item.draw(false)
+                        {shapeArray.items.map((item: IShapeGroup) => (
+                            item.draw(false, update)
                         ))}
                     </Canvas>
                 </Paper>

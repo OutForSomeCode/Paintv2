@@ -4,7 +4,7 @@ import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
 
 class Square implements IShape{
-    draw(index:number, CenterPos: Vector2, size : Vector2, style: CSSProperties, inGroup: boolean) {
+    draw(index:number, CenterPos: Vector2, size : Vector2, style: CSSProperties, inGroup: boolean, callback: () => void) {
         let crossSection = (size.x + size.y) / 2;
         let offsetX = crossSection / 2;
         let offsetY = crossSection / 2;
@@ -16,7 +16,9 @@ class Square implements IShape{
             width={crossSection}
             height={crossSection}
             style={style}
-            ingroup={inGroup}/>;
+            ingroup={inGroup}
+            update={callback}
+        />;
     }
 
     getType(): string {

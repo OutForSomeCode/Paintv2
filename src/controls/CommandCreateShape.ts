@@ -1,9 +1,9 @@
 import {Shape} from "../shapes/Shape";
-import {Shapes} from "../shapes/Shapes";
+import {Items} from "../shapes/Items";
 import {ICommand} from "./ICommand";
 
-class CreateShape implements ICommand {
-    private _shapeInstance = Shapes.getInstance();
+class CommandCreateShape implements ICommand {
+    private _shapeInstance = Items.getInstance();
     private _shape: Shape;
 
     constructor(shape: Shape) {
@@ -20,4 +20,4 @@ class CreateShape implements ICommand {
     }
 }
 
-export {CreateShape}
+export {CommandCreateShape}

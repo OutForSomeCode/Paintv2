@@ -1,8 +1,9 @@
 import React from "react";
-import {CreateShape} from "../controls/CreateShape";
+import {CommandCreateShape} from "../controls/CommandCreateShape";
 import {Shape} from "../shapes/Shape";
 import {SharedShapeData} from "../shapes/SharedShapeData";
 import {Commands} from "../controls/Commands";
+import SelectDrag from "../functions/SelectDrag";
 
 class Canvas extends React.Component<any, any> {
     private _svgCanvas = React.createRef<SVGSVGElement>();
@@ -10,13 +11,13 @@ class Canvas extends React.Component<any, any> {
     private _update = this.props.shapeUpdate;
 
     componentDidMount(): void {
-
+        SelectDrag(this);
     }
 
     addShape = (event: { clientX: number; clientY: number; }): any => {
         let offset = this._svgCanvas.current!.getBoundingClientRect();
         this._commandInstance.push(
-            new CreateShape(
+            new CommandCreateShape(
                 new Shape(
                     SharedShapeData.type,
                     event.clientX - offset.left,

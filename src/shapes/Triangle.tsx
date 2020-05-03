@@ -4,7 +4,7 @@ import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
 
 class Triangle implements IShape {
-    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean) {
+    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean, callback: () => void) {
         let plb = [CenterPos.x + (size.x / 2), CenterPos.y + (size.y / 2)];
         let prb = [CenterPos.x - (size.x / 2), CenterPos.y + (size.y / 2)];
         let ptm = [CenterPos.x, CenterPos.y - (size.y / 2)];
@@ -19,6 +19,7 @@ class Triangle implements IShape {
             height={size.y}
             style={style}
             ingroup={inGroup}
+            update={callback}
         />;
     }
 
