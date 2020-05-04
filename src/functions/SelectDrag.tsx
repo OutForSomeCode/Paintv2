@@ -1,5 +1,6 @@
 import React from "react";
 import {findDOMNode} from "react-dom";
+import {Vector2} from "../utility/Vector2";
 
 const d3 = require("d3");
 
@@ -9,14 +10,12 @@ export default function selectDrag(comp: React.Component) {
     let startPos = {x: 0, y: 0};
 
     function startDragging() {
-        d3.select("#selectionField").remove();
+        d3.selectAll(".selected").classed("selected", false);
         startPos = {x: d3.event.x, y: d3.event.y};
         // @ts-ignore
         d3.select(this)
             .append("rect")
             .attr("id", "selectionField")
-            .attr("rx", 6)
-            .attr("ry", 6)
             .attr("class", "selection")
             .attr("x", startPos.x)
             .attr("y", startPos.y)
@@ -31,16 +30,33 @@ export default function selectDrag(comp: React.Component) {
         if (width < 0)
             d3.select("#selectionField").attr("x", startPos.x + width);
 
-        if(height < 0)
+        if (height < 0)
             d3.select("#selectionField").attr("y", startPos.y + height);
 
         d3.select("#selectionField").attr("width", Math.abs(width)).attr("height", Math.abs(height));
 
-        //todo add identifier class to each toplevel shape/group
+        d3.selectAll("#canvas > rect, #canvas > ellipse, #canvas > polygon, #canvas > g").each(function (d: any, i: number) {
+            // @ts-ignore
+            const item = d3.select(this);
+            const itemBBox = item.node().getBBox();
+            const itemCenter = new Vector2(itemBBox.x + (itemBBox.width / 2), itemBBox.y + (itemBBox.height / 2));
+            const selectBBox = d3.select("#selectionField").node().getBBox();
+
+            if (itemCenter.x > selectBBox.x && itemCenter.x < (selectBBox.x + selectBBox.width) &&
+                itemCenter.y > selectBBox.y && itemCenter.y < (selectBBox.y + selectBBox.height)) {
+                // @ts-ignore
+                if (item.node() !== d3.select("#selectionField").node()) {
+                    item.classed("selected", true);
+                }
+            } else {
+                // @ts-ignore
+                item.classed("selected", false);
+            }
+        });
     }
 
     function endDragging() {
-
+        d3.select("#selectionField").remove();
     }
 
     const attach = d3.drag()

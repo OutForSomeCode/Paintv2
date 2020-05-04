@@ -32,7 +32,7 @@ class Canvas extends React.Component<any, any> {
     }
 
     render() {
-        return <svg className="fullSize" ref={this._svgCanvas} onClick={this.addShape}>
+        return <svg id="canvas" className="fullSize" ref={this._svgCanvas} onClick={this.addShape}>
             {this.props.children}
         </svg>;
     }

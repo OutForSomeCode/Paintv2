@@ -7,6 +7,10 @@ html, body, .fullSize {
 rect.selection {
     stroke          : gray;
     stroke-dasharray: 4px;
-    stroke-opacity  : 0.5;
     fill            : transparent;
+}
+
+.selected {
+    outline: gray dashed 1px;
+    outline-offset: 5px;
 }

@@ -9,11 +9,11 @@ const d3 = require("d3");
 export default function AttachDrag(comp: React.Component, update: () => void) {
     const node: any = findDOMNode(comp);
     const commands = Commands.getInstance();
-    let position = new Vector2(0,0);
+    let position = new Vector2(0, 0);
 
     function startDragging() {
         // @ts-ignore
-        d3.select(this).raise().style("stroke", "#65aae6");
+        d3.select(this).raise().classed("selected", true);
     }
 
     function dragging() {
@@ -26,10 +26,15 @@ export default function AttachDrag(comp: React.Component, update: () => void) {
     }
 
     function endDragging() {
-        commands.push(new CommandUpdatePosition(node.id, position));
+        if (position.x >= 1 || position.x <= -1 || position.y >= 1 || position.y <= -1) //prevent "empty" commands in the history que
+            commands.push(new CommandUpdatePosition(node.id, position));
         // @ts-ignore
-        d3.select(this).style("stroke", "#000000").attr('transform', null);
+        d3.select(this).attr('transform', null);
         update();
+    }
+
+    function preventClick() {
+        d3.event.stopPropagation(); //prevent new shapes being added when a shape is clicked
     }
 
     const attach = d3.drag()
@@ -41,4 +46,5 @@ export default function AttachDrag(comp: React.Component, update: () => void) {
         .on("end", endDragging);
 
     attach(d3.select(node));
+    d3.select(node).on("click", preventClick);
 }
