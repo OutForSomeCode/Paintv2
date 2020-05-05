@@ -17,6 +17,7 @@ import {Shape} from "./shapes/Shape";
 import {Square} from "./shapes/Square";
 import {Circle} from "./shapes/Circle";
 import {SharedShapeData} from "./shapes/SharedShapeData";
+import ContextMenu from "./controls/ContextMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -84,6 +85,7 @@ function App() {
                             item.draw(false, update)
                         ))}
                     </Canvas>
+                    <ContextMenu shapeUpdate={update}/>
                 </Paper>
             </Grid>
         </Grid>

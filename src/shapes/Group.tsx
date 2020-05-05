@@ -9,11 +9,11 @@ const uuid = require('react-uuid');
 
 class Group implements IShapeGroup {
     private readonly _uuid: any = null;
-    private _items: IShapeGroup[];
+    private _items: IShapeGroup[] = [];
     private _shapeInstance = Items.getInstance();
 
-    constructor(items: IShapeGroup[]) {
-        this._items = items;
+    constructor(uuids: any[]) {
+        this.add(uuids);
         this._uuid = uuid();
     }
 
@@ -32,13 +32,17 @@ class Group implements IShapeGroup {
     }
 
     add(shapeUuids: any[]): void {
-        shapeUuids.forEach((uuid) => {
-            this._items.push(this._shapeInstance.remove(uuid)[0]);
-        });
+        if (shapeUuids.length > 0) {
+            shapeUuids.forEach((uuid) => {
+                this._items.push(this._shapeInstance.remove(uuid)[0]);
+            });
+        }
     }
 
     remove(): void {
-
+        this._items.forEach((item) => {
+            this._shapeInstance.add(this._items.splice(this._items.indexOf(item.getObjectData().id), 1)[0])
+        });
     }
 
     acceptVisitor(v: IVisitor): void {

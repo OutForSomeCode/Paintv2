@@ -55,6 +55,13 @@ export default function Drag(comp: React.Component, update: () => void) {
         .on("contextmenu", function () {
             // @ts-ignore
             if (d3.select(this).classed("selected")) {
+                // @ts-ignore
+                let position = d3.mouse(this);
+                d3.select('#contextMenu')
+                    .style('position', 'absolute')
+                    .style('left', position[0] + "px")
+                    .style('top', position[1] + "px")
+                    .style('display', 'block');
                 d3.event.preventDefault();
             }
         })

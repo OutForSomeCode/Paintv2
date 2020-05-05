@@ -14,3 +14,7 @@ rect.selection {
     outline: gray dashed 1px;
     outline-offset: 5px;
 }
+
+#contextMenu {
+    display: none;
+}
