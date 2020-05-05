@@ -3,15 +3,18 @@ import React from "react";
 import {findDOMNode} from "react-dom";
 import {Vector2} from "../utility/Vector2";
 import {CommandUpdatePosition} from "../controls/CommandUpdatePosition";
+import selection from "./selection";
 
 const d3 = require("d3");
 
-export default function AttachDrag(comp: React.Component, update: () => void) {
+export default function Drag(comp: React.Component, update: () => void) {
     const node: any = findDOMNode(comp);
     const commands = Commands.getInstance();
     let position = new Vector2(0, 0);
 
     function startDragging() {
+        d3.selectAll(".selected").classed("selected", false);
+
         // @ts-ignore
         d3.select(this).raise().classed("selected", true);
     }
@@ -31,10 +34,11 @@ export default function AttachDrag(comp: React.Component, update: () => void) {
         // @ts-ignore
         d3.select(this).attr('transform', null);
         update();
+        selection();
     }
 
     function preventClick() {
-        d3.event.stopPropagation(); //prevent new shapes being added when a shape is clicked
+        d3.event.stopPropagation(); //prevent new shapes from being added when a shape is clicked
     }
 
     const attach = d3.drag()
@@ -46,5 +50,12 @@ export default function AttachDrag(comp: React.Component, update: () => void) {
         .on("end", endDragging);
 
     attach(d3.select(node));
-    d3.select(node).on("click", preventClick);
+    d3.select(node)
+        .on("click", preventClick)
+        .on("contextmenu", function () {
+            // @ts-ignore
+            if (d3.select(this).classed("selected")) {
+                d3.event.preventDefault();
+            }
+        })
 }

@@ -3,6 +3,7 @@ import {IShapeGroup} from "./IShapeGroup";
 class Items {
     private static _instance: Items;
     private _itemArray: IShapeGroup[] = [];
+    private _selectedItemsUuids: any[] = [];
 
     private constructor() {
     }
@@ -22,6 +23,14 @@ class Items {
     // for loading all shape data
     set itemArray(value: IShapeGroup[]) {
         this._itemArray = value;
+    }
+
+    get selectedItemsUuids(): any[] {
+        return this._selectedItemsUuids;
+    }
+
+    set selectedItemsUuids(value: any[]) {
+        this._selectedItemsUuids = value;
     }
 
     public add = (item: IShapeGroup): void => {

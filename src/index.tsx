@@ -48,14 +48,14 @@ const useStyles = makeStyles((theme: Theme) =>
 function App() {
     const itemsInstance = Items.getInstance();
 
-    itemsInstance.add(new Group([
-        new Shape(new Circle(), 50, 50, 50, 50, SharedShapeData.styling),
-        new Shape(new Square(), 100, 100, 50, 50, SharedShapeData.styling),
-        new Group([
-            new Shape(new Circle(), 50,100, 50,50, SharedShapeData.styling),
-            new Shape(new Square(), 100, 150, 50, 50, SharedShapeData.styling)
-        ])
-    ]));
+    // itemsInstance.add(new Group([
+    //     new Shape(new Circle(), 50, 50, 50, 50, SharedShapeData.styling),
+    //     new Shape(new Square(), 100, 100, 50, 50, SharedShapeData.styling),
+    //     new Group([
+    //         new Shape(new Circle(), 50,100, 50,50, SharedShapeData.styling),
+    //         new Shape(new Square(), 100, 150, 50, 50, SharedShapeData.styling)
+    //     ])
+    // ]));
 
     const classes = useStyles();
     const [shapeArray, setShapes] = React.useState({items: itemsInstance.itemArray});
