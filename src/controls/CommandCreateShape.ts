@@ -11,7 +11,7 @@ class CommandCreateShape implements ICommand {
     }
 
     execute(): boolean {
-        this._shapeInstance.add(this._shape);
+        this._shapeInstance.add([this._shape]);
         return true;
     }
 

@@ -33,8 +33,8 @@ class Items {
         this._selectedItemsUuids = value;
     }
 
-    public add = (item: IShapeGroup): void => {
-        this._itemArray.push(item);
+    public add = (items: IShapeGroup[]): void => {
+        this._itemArray = this._itemArray.concat(items);
     }
 
     public remove = (uuid: any): IShapeGroup[] => {

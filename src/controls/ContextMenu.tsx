@@ -9,22 +9,26 @@ import BackspaceIcon from '@material-ui/icons/Backspace';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Items} from "../shapes/Items";
 import {Group} from "../shapes/Group";
+import {Commands} from "./Commands";
+import {CommandCreateGroup} from "./CommandCreateGroup";
 
 const d3 = require("d3");
 
 export default function ContextMenu({shapeUpdate}: { shapeUpdate: any }) {
     const itemInstance = Items.getInstance();
+    const commands = Commands.getInstance();
 
     function createGroup() {
-        itemInstance.add(new Group(itemInstance.selectedItemsUuids));
+        commands.push(new CommandCreateGroup(itemInstance.selectedItemsUuids));
         hideContextMenu();
     }
 
     function removeGroup() {
         itemInstance.selectedItemsUuids.forEach((uuid) => {
-            //todo type check needed (typeof not working)
-            const i = itemInstance.get(uuid) as Group;
-            i.remove();
+            if (d3.select(`[id="${uuid}"]`).node().tagName === "g") {
+                const i = itemInstance.get(uuid) as Group;
+                i.remove();
+            }
         });
         hideContextMenu();
     }
@@ -47,7 +51,7 @@ export default function ContextMenu({shapeUpdate}: { shapeUpdate: any }) {
                     <ListItemIcon>
                         <BackspaceIcon fontSize="small"/>
                     </ListItemIcon>
-                    <Typography variant="inherit">Remove group</Typography>
+                    <Typography variant="inherit">Remove group(s)</Typography>
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
