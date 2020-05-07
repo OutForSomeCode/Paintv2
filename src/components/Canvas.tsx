@@ -1,9 +1,11 @@
 import React from "react";
-import {CommandCreateShape} from "../controls/CommandCreateShape";
+import {CommandCreateShape} from "../Commands/CommandCreateShape";
 import {Shape} from "../shapes/Shape";
 import {SharedShapeData} from "../shapes/SharedShapeData";
-import {Commands} from "../controls/Commands";
+import {Commands} from "../Commands/Commands";
 import SelectDrag from "../functions/Select";
+
+const d3 = require("d3");
 
 class Canvas extends React.Component<any, any> {
     private _svgCanvas = React.createRef<SVGSVGElement>();
@@ -15,6 +17,8 @@ class Canvas extends React.Component<any, any> {
     }
 
     addShape = (event: { clientX: number; clientY: number; }): any => {
+        d3.select("#contextMenu").style('display', 'none');
+
         let offset = this._svgCanvas.current!.getBoundingClientRect();
         this._commandInstance.push(
             new CommandCreateShape(

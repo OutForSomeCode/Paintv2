@@ -1,8 +1,8 @@
-import {Commands} from "../controls/Commands";
+import {Commands} from "../Commands/Commands";
 import React from "react";
 import {findDOMNode} from "react-dom";
 import {Vector2} from "../utility/Vector2";
-import {CommandUpdatePosition} from "../controls/CommandUpdatePosition";
+import {CommandUpdatePosition} from "../Commands/CommandUpdatePosition";
 import selection from "./selection";
 
 const d3 = require("d3");
@@ -14,6 +14,7 @@ export default function Drag(comp: React.Component, update: () => void) {
 
     function startDragging() {
         d3.selectAll(".selected").classed("selected", false);
+        d3.select("#contextMenu").style('display', 'none');
 
         // @ts-ignore
         d3.select(this).raise().classed("selected", true);
@@ -57,11 +58,13 @@ export default function Drag(comp: React.Component, update: () => void) {
             if (d3.select(this).classed("selected")) {
                 // @ts-ignore
                 let position = d3.mouse(this);
+
                 d3.select('#contextMenu')
                     .style('position', 'absolute')
+                    .style('display', 'block')
                     .style('left', position[0] + "px")
                     .style('top', position[1] + "px")
-                    .style('display', 'block');
+
                 d3.event.preventDefault();
             }
         })

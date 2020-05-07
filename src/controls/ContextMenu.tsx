@@ -9,14 +9,22 @@ import BackspaceIcon from '@material-ui/icons/Backspace';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Items} from "../shapes/Items";
 import {Group} from "../shapes/Group";
-import {Commands} from "./Commands";
-import {CommandCreateGroup} from "./CommandCreateGroup";
+import {Commands} from "../Commands/Commands";
+import {CommandCreateGroup} from "../Commands/CommandCreateGroup";
+import reactCSS from "reactcss";
+import {CommandDeleteSelected} from "../Commands/CommandDeleteSelected";
 
 const d3 = require("d3");
 
 export default function ContextMenu({shapeUpdate}: { shapeUpdate: any }) {
     const itemInstance = Items.getInstance();
     const commands = Commands.getInstance();
+    const styles = ({
+        menu: {
+            width: '250px',
+        },
+        // @ts-ignore
+    }) as reactCSS;
 
     function createGroup() {
         commands.push(new CommandCreateGroup(itemInstance.selectedItemsUuids));
@@ -33,13 +41,18 @@ export default function ContextMenu({shapeUpdate}: { shapeUpdate: any }) {
         hideContextMenu();
     }
 
+    function deleteSelected() {
+        commands.push(new CommandDeleteSelected(itemInstance.selectedItemsUuids));
+        hideContextMenu();
+    }
+
     function hideContextMenu() {
         d3.select("#contextMenu").style('display', 'none');
         shapeUpdate();
     }
 
     return (
-        <Paper id="contextMenu">
+        <Paper id="contextMenu" style={styles.menu}>
             <MenuList>
                 <MenuItem onClick={createGroup}>
                     <ListItemIcon>
@@ -53,7 +66,7 @@ export default function ContextMenu({shapeUpdate}: { shapeUpdate: any }) {
                     </ListItemIcon>
                     <Typography variant="inherit">Remove group(s)</Typography>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={deleteSelected}>
                     <ListItemIcon>
                         <DeleteIcon fontSize="small"/>
                     </ListItemIcon>
