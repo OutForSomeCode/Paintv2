@@ -13,6 +13,7 @@ import {Commands} from "../Commands/Commands";
 import {CommandCreateGroup} from "../Commands/CommandCreateGroup";
 import reactCSS from "reactcss";
 import {CommandDeleteSelected} from "../Commands/CommandDeleteSelected";
+import {CommandRemoveGroup} from "../Commands/CommandRemoveGroup";
 
 const d3 = require("d3");
 
@@ -27,17 +28,13 @@ export default function ContextMenu({shapeUpdate}: { shapeUpdate: any }) {
     }) as reactCSS;
 
     function createGroup() {
+        // todo fix this command, not working properly
         commands.push(new CommandCreateGroup(itemInstance.selectedItemsUuids));
         hideContextMenu();
     }
 
     function removeGroup() {
-        itemInstance.selectedItemsUuids.forEach((uuid) => {
-            if (d3.select(`[id="${uuid}"]`).node().tagName === "g") {
-                const i = itemInstance.get(uuid) as Group;
-                i.remove();
-            }
-        });
+        commands.push(new CommandRemoveGroup(itemInstance.selectedItemsUuids));
         hideContextMenu();
     }
 
