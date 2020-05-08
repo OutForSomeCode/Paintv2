@@ -4,6 +4,7 @@ class Commands {
     private static _instance: Commands;
     private _commandArray: ICommand[] = [];
     private _undoneCommands: ICommand[] = [];
+    private _isRedo: boolean = false;
 
     private constructor() {
     }
@@ -28,6 +29,10 @@ class Commands {
     public push = (command: ICommand): void => {
         if (command.execute()) {
             this._commandArray.push(command);
+            if (!this._isRedo) {
+                this._undoneCommands.length = 0;
+                this._isRedo = false;
+            }
         }
     }
 
@@ -41,6 +46,7 @@ class Commands {
 
     public redo = (): void => {
         if (this._undoneCommands.length > 0) {
+            this._isRedo = true;
             this.push(this._undoneCommands.pop() as ICommand);
         }
     }

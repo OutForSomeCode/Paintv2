@@ -9,14 +9,15 @@ import History from "./controls/History";
 import ShapeSelect from "./controls/ShapeSelect";
 import ShapeSizeInput from "./controls/ShapeSizeInput";
 import {ShapeStyleInput} from "./controls/ShapeStyleInput";
-import {Shape} from "./shapes/Shape";
-import {SharedShapeData} from "./shapes/SharedShapeData";
 import IOMenu from "./controls/SaveLoad";
 import {Canvas} from "./components/Canvas";
 import {IShapeGroup} from "./shapes/IShapeGroup";
 import {Group} from "./shapes/Group";
-import {Circle} from "./shapes/Circle";
+import {Shape} from "./shapes/Shape";
 import {Square} from "./shapes/Square";
+import {Circle} from "./shapes/Circle";
+import {SharedShapeData} from "./shapes/SharedShapeData";
+import ContextMenu from "./controls/ContextMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -84,6 +85,7 @@ function App() {
                             item.draw(false, update)
                         ))}
                     </Canvas>
+                    <ContextMenu shapeUpdate={update}/>
                 </Paper>
             </Grid>
         </Grid>

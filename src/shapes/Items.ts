@@ -3,6 +3,7 @@ import {IShapeGroup} from "./IShapeGroup";
 class Items {
     private static _instance: Items;
     private _itemArray: IShapeGroup[] = [];
+    private _selectedItemsUuids: any[] = [];
 
     private constructor() {
     }
@@ -24,8 +25,16 @@ class Items {
         this._itemArray = value;
     }
 
-    public add = (item: IShapeGroup): void => {
-        this._itemArray.push(item);
+    get selectedItemsUuids(): any[] {
+        return this._selectedItemsUuids;
+    }
+
+    set selectedItemsUuids(value: any[]) {
+        this._selectedItemsUuids = value;
+    }
+
+    public add = (items: IShapeGroup[]): void => {
+        this._itemArray = this._itemArray.concat(items);
     }
 
     public remove = (uuid: any): IShapeGroup[] => {

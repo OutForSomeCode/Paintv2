@@ -8,13 +8,13 @@ import {Vector2} from "../utility/Vector2";
 const uuid = require('react-uuid');
 
 class Group implements IShapeGroup {
-    private readonly _uuid: any = null;
-    private _items: IShapeGroup[];
-    private _shapeInstance = Items.getInstance();
+    private readonly _uuid: any;
+    private _items: IShapeGroup[] = [];
+    private _itemInstance = Items.getInstance();
 
-    constructor(items: IShapeGroup[]) {
-        this._items = items;
+    constructor(uuids: any[]) {
         this._uuid = uuid();
+        this.add(uuids);
     }
 
     draw = (inGroup: boolean, callback: () => void): any => {
@@ -31,14 +31,15 @@ class Group implements IShapeGroup {
         })
     }
 
-    add(shapeUuids: any[]): void {
-        shapeUuids.forEach((uuid) => {
-            this._items.push(this._shapeInstance.remove(uuid)[0]);
+    add(uuids: any[]) {
+        uuids.forEach((uuid) => {
+            this._items.push(this._itemInstance.remove(uuid)[0]);
         });
     }
 
     remove(): void {
-
+        this._itemInstance.add(this._items);
+        this._itemInstance.remove(this._uuid);
     }
 
     acceptVisitor(v: IVisitor): void {

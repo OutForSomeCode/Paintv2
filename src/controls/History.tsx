@@ -2,7 +2,7 @@ import React from "react";
 import {Button} from "@material-ui/core";
 import RedoIcon from '@material-ui/icons/Redo';
 import UndoIcon from '@material-ui/icons/Undo';
-import {Commands} from "./Commands";
+import {Commands} from "../Commands/Commands";
 import Grid from "@material-ui/core/Grid";
 
 export default function History({shapeUpdate}: {shapeUpdate: any}) {
