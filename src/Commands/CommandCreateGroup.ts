@@ -19,7 +19,7 @@ class CommandCreateGroup implements ICommand{
     }
 
     undo(): void {
-        let g = this._itemInstance.get(this._uuid) as Group;
+        const g = this._itemInstance.get(this._uuid) as Group;
         g.remove();
     }
 }

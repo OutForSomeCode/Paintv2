@@ -8,7 +8,6 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 import BackspaceIcon from '@material-ui/icons/Backspace';
 import DeleteIcon from '@material-ui/icons/Delete';
 import {Items} from "../shapes/Items";
-import {Group} from "../shapes/Group";
 import {Commands} from "../Commands/Commands";
 import {CommandCreateGroup} from "../Commands/CommandCreateGroup";
 import reactCSS from "reactcss";
@@ -28,7 +27,6 @@ export default function ContextMenu({shapeUpdate}: { shapeUpdate: any }) {
     }) as reactCSS;
 
     function createGroup() {
-        // todo fix this command, not working properly
         commands.push(new CommandCreateGroup(itemInstance.selectedItemsUuids));
         hideContextMenu();
     }

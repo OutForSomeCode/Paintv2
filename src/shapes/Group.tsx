@@ -14,9 +14,7 @@ class Group implements IShapeGroup {
 
     constructor(uuids: any[]) {
         this._uuid = uuid();
-        uuids.forEach((uuid) => {
-            this._items.push(this._itemInstance.remove(uuid)[0]);
-        });
+        this.add(uuids);
     }
 
     draw = (inGroup: boolean, callback: () => void): any => {
@@ -31,6 +29,12 @@ class Group implements IShapeGroup {
         this._items.forEach((item: IShapeGroup) => {
             item.updatePosition(translation);
         })
+    }
+
+    add(uuids: any[]) {
+        uuids.forEach((uuid) => {
+            this._items.push(this._itemInstance.remove(uuid)[0]);
+        });
     }
 
     remove(): void {

@@ -25,10 +25,11 @@ class CommandRemoveGroup implements ICommand {
     }
 
     undo(): void {
+        const uuids: any[] = [];
         this._removedGroups.forEach((group) => {
-            let uuids: any[] = [];
+            uuids.length = 0;
             group.items.forEach((item: any) => {
-                uuids.push(item.id);
+                uuids.push(item.getObjectData().id);
             });
             this._itemInstance.add([new Group(uuids)]);
         });

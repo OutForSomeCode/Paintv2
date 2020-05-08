@@ -12,5 +12,4 @@ export default function Selection() {
         selected.push(item.node().id);
     });
     itemsInstance.selectedItemsUuids = selected;
-    console.log(itemsInstance.selectedItemsUuids);
 }
