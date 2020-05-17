@@ -2,8 +2,7 @@ const d3 = require("d3");
 
 export default function Resize() {
     const svg = d3.select("#canvas");
-    const selectedShape = d3.select(".selected").node();
-    const selectedShapeBBox = selectedShape.getBBox();
+    const selectedShapeBBox = d3.select(".selected").node().getBBox();
     const padding = 7;
 
     const dragLT = d3.drag().on("drag", dragPointLT);
@@ -80,5 +79,54 @@ export default function Resize() {
         pointRT.attr("cx", right).attr("cy", top);
         pointLB.attr("cx", left).attr("cy", bottom);
         pointRB.attr("cx", right).attr("cy", bottom);
+
+        switch (d3.select(".selected").node().tagName) {
+            case "ellipse":
+                updateEllipse();
+                break;
+            case "rect":
+                updateRect()
+                break;
+            case "polygon":
+                updatePolygon()
+                break;
+            case "g":
+                updateGroup();
+                break;
+            default:
+                updateEllipse();
+                break;
+        }
+    }
+
+    function updateEllipse() {
+        d3.select(".selected")
+            .attr("rx", (right - left) / 2)
+            .attr("ry", (bottom - top) / 2)
+            .attr("cx", left + (right - left) / 2)
+            .attr("cy", top + (bottom - top) / 2);
+    }
+
+    function updateRect() {
+        d3.select(".selected")
+            .attr("width", right - left)
+            .attr("height", bottom - top)
+            .attr("x", left)
+            .attr("y", top);
+    }
+
+    function updatePolygon() {
+        d3.select(".selected")
+            .attr("points", `${left},${bottom} ${right},${bottom} ${left + (right - left) / 2},${top}`)
+            .attr("cx", left + (right - left) / 2)
+            .attr("cy", top + (bottom - top) / 2);
+    }
+
+    function updateGroup() {
+        let scaleX = 1 / selectedShapeBBox.width * (right - left);
+        let scaleY = 1 / selectedShapeBBox.height * (bottom - top);
+
+
+        //todo: ???? .each
     }
 }
