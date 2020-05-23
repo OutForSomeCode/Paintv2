@@ -3,7 +3,8 @@ import React from "react";
 import {findDOMNode} from "react-dom";
 import {Vector2} from "../utility/Vector2";
 import {CommandUpdatePosition} from "../Commands/CommandUpdatePosition";
-import selection from "./selection";
+import Selection from "./Selection";
+import Resize from "./Resize";
 
 const d3 = require("d3");
 
@@ -14,6 +15,7 @@ export default function Drag(comp: React.Component, update: () => void) {
 
     function startDragging() {
         d3.selectAll(".selected").classed("selected", false);
+        d3.selectAll(".resizePoint").remove();
         d3.select("#contextMenu").style('display', 'none');
 
         // @ts-ignore
@@ -35,7 +37,9 @@ export default function Drag(comp: React.Component, update: () => void) {
         // @ts-ignore
         d3.select(this).attr('transform', null);
         update();
-        selection();
+        if (Selection() === 1) {
+            Resize();
+        }
     }
 
     function preventClick() {

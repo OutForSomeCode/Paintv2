@@ -1,10 +1,10 @@
 import React from "react";
 import {findDOMNode} from "react-dom";
 import {Vector2} from "../utility/Vector2";
-import selection from "./selection";
+import Selection from "./Selection";
+import Resize from "./Resize";
 
 const d3 = require("d3");
-
 
 export default function Select(comp: React.Component) {
     const node: any = findDOMNode(comp);
@@ -12,6 +12,7 @@ export default function Select(comp: React.Component) {
 
     function startDragging() {
         d3.selectAll(".selected").classed("selected", false);
+        d3.selectAll(".resizePoint").remove();
         startPos = {x: d3.event.x, y: d3.event.y};
         // @ts-ignore
         d3.select(this)
@@ -28,13 +29,11 @@ export default function Select(comp: React.Component) {
         let width = d3.event.x - startPos.x;
         let height = d3.event.y - startPos.y;
 
-        if (width < 0)
-            d3.select("#selectionField").attr("x", startPos.x + width);
-
-        if (height < 0)
-            d3.select("#selectionField").attr("y", startPos.y + height);
-
-        d3.select("#selectionField").attr("width", Math.abs(width)).attr("height", Math.abs(height));
+        d3.select("#selectionField")
+            .attr("x", width < 0 ? startPos.x + width : startPos.x)
+            .attr("y", height < 0 ? startPos.y + height : startPos.y)
+            .attr("width", Math.abs(width))
+            .attr("height", Math.abs(height));
 
         d3.selectAll("#canvas > rect, #canvas > ellipse, #canvas > polygon, #canvas > g").each(function () {
             // @ts-ignore
@@ -56,7 +55,9 @@ export default function Select(comp: React.Component) {
 
     function endDragging() {
         d3.select("#selectionField").remove();
-        selection();
+        if (Selection() === 1) {
+            Resize();
+        }
     }
 
     const attach = d3.drag()
