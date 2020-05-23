@@ -67,8 +67,8 @@ export default function Resize() {
      * each drag point has its own function to update the coordinates an scale accordingly
      */
     function dragPointLT() {
-        sx = scale(left, d3.event.x);
-        sy = scale(top, d3.event.y);
+        sx = scale(right - left, right - d3.event.x);
+        sy = scale(bottom - top, bottom - d3.event.y);
 
         left = d3.event.x;
         top = d3.event.y;
@@ -77,8 +77,8 @@ export default function Resize() {
     }
 
     function dragPointRT() {
-        sx = scale(right, d3.event.x);
-        sy = scale(top, d3.event.y);
+        sx = scale(right - left, d3.event.x - left);
+        sy = scale(bottom - top, bottom - d3.event.y);
 
         right = d3.event.x;
         top = d3.event.y;
@@ -87,8 +87,8 @@ export default function Resize() {
     }
 
     function dragPointLB() {
-        sx = scale(left, d3.event.x);
-        sy = scale(bottom, d3.event.y);
+        sx = scale(right - left, right - d3.event.x);
+        sy = scale(bottom - top, d3.event.y - top);
 
         left = d3.event.x;
         bottom = d3.event.y;
@@ -97,8 +97,8 @@ export default function Resize() {
     }
 
     function dragPointRB() {
-        sx = scale(right, d3.event.x);
-        sy = scale(bottom, d3.event.y);
+        sx = scale(right - left, d3.event.x - left);
+        sy = scale(bottom - top, d3.event.y - top);
 
         right = d3.event.x;
         bottom = d3.event.y;
@@ -114,7 +114,6 @@ export default function Resize() {
     function scale(oldSize: number, newSize: number): number {
         return (1 / oldSize) * newSize;
     }
-
 
     /**
      * update all drag points when 1 point is being dragged
