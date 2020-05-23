@@ -15,10 +15,8 @@ export default function Resize() {
     let left = selectedShapeBBox.width < 0 ? selectedShapeBBox.x + selectedShapeBBox.width : selectedShapeBBox.x;
     let right = selectedShapeBBox.width < 0 ? selectedShapeBBox.x : selectedShapeBBox.x + selectedShapeBBox.width;
 
-    let sTop = 1;
-    let sBottom = 1;
-    let sLeft = 1;
-    let sRight = 1;
+    let sx = 1;
+    let sy = 1;
 
     let pointLT = svg.append('circle')
         .attr('class', 'resizePoint')
@@ -52,10 +50,8 @@ export default function Resize() {
     //todo: add css for resizePoint in index.xss
 
     function dragPointLT() {
-        sTop = scale(top, d3.event.y);
-        sBottom = 1;
-        sLeft = scale(left, d3.event.x);
-        sRight = 1;
+        sx = scale(left, d3.event.x);
+        sy = scale(top, d3.event.y);
 
         left = d3.event.x;
         top = d3.event.y;
@@ -64,10 +60,8 @@ export default function Resize() {
     }
 
     function dragPointRT() {
-        sTop = scale(top, d3.event.y);
-        sBottom = 1;
-        sLeft = 1;
-        sRight = scale(right, d3.event.x);
+        sx = scale(right, d3.event.x);
+        sy = scale(top, d3.event.y);
 
         right = d3.event.x;
         top = d3.event.y;
@@ -76,10 +70,8 @@ export default function Resize() {
     }
 
     function dragPointLB() {
-        sTop = 1;
-        sBottom = scale(bottom, d3.event.y);
-        sLeft = scale(left, d3.event.x);
-        sRight = 1;
+        sx = scale(left, d3.event.x);
+        sy = scale(bottom, d3.event.y);
 
         left = d3.event.x;
         bottom = d3.event.y;
@@ -88,10 +80,8 @@ export default function Resize() {
     }
 
     function dragPointRB() {
-        sTop = 1;
-        sBottom = scale(bottom, d3.event.y);
-        sLeft = 1;
-        sRight = scale(right, d3.event.x);
+        sx = scale(right, d3.event.x);
+        sy = scale(bottom, d3.event.y);
 
         right = d3.event.x;
         bottom = d3.event.y;
@@ -109,75 +99,71 @@ export default function Resize() {
         pointLB.attr("cx", left).attr("cy", bottom);
         pointRB.attr("cx", right).attr("cy", bottom);
 
-        console.log(sTop, sBottom, sLeft, sRight);
+        console.log(sx, sy);
         console.log("---------------------")
 
-        updateShapes(d3.select(".selected"));
+        updateShapes(d3.select(".selected"), { t: top, b: bottom, l: left, r: right });
     }
 
-    function updateShapes(selected: any) {
+    function updateShapes(selected: any, s: { t: number, b: number, l: number, r: number }) {
         switch (selected.node().tagName) {
             case "ellipse":
-                updateEllipse(selected);
+                updateEllipse(selected, s);
                 break;
             case "rect":
-                updateRect(selected)
+                updateRect(selected, s)
                 break;
             case "polygon":
-                updatePolygon(selected)
+                updatePolygon(selected, s)
                 break;
             case "g":
-                updateGroup(selected);
+                updateGroup(selected, s);
                 break;
             default:
-                updateEllipse(selected);
+                updateEllipse(selected, s);
                 break;
         }
     }
 
-    function updateEllipse(selected: any) {
+    function updateEllipse(selected: any, s: { t: number, b: number, l: number, r: number }) {
+
+        selected
+            .attr("rx", (s.r - s.l) / 2)
+            .attr("ry", (s.b - s.t) / 2)
+            .attr("cx", s.l + (s.r - s.l) / 2)
+            .attr("cy", s.t + (s.b - s.t) / 2)
+    }
+
+    function updateRect(selected: any, s: { t: number, b: number, l: number, r: number }) {
+        selected
+            .attr("width", s.r - s.l)
+            .attr("height", s.b - s.t)
+            .attr("x", s.l)
+            .attr("y", s.t);
+    }
+
+    function updatePolygon(selected: any, s: { t: number, b: number, l: number, r: number }) {
+        selected
+            .attr("points", `${s.l},${s.b} ${s.r},${s.b} ${s.l + (s.r - s.l) / 2},${s.t}`)
+            .attr("cx", s.l + (s.r - s.l) / 2)
+            .attr("cy", s.t + (s.b - s.t) / 2);
+    }
+
+    function updateGroup(selected: any, s: { t: number, b: number, l: number, r: number }) {
         const current = selected.node().getBBox();
-        const t = current.y * sTop;
-        const b = (current.y + current.height) * sBottom;
-        const l = current.x * sLeft;
-        const r = (current.x + current.width) * sRight;
-
-        selected
-            .attr("rx", (r - l) / 2)
-            .attr("ry", (b - t) / 2)
-            .attr("cx", l + (r - l) / 2)
-            .attr("cy", t + (b - t) / 2)
-    }
-
-    function updateRect(selected: any) {
-        selected
-            .attr("width", right - left)
-            .attr("height", bottom - top)
-            .attr("x", left)
-            .attr("y", top);
-    }
-
-    function updatePolygon(selected: any) {
-        selected
-            .attr("points", `${left},${bottom} ${right},${bottom} ${left + (right - left) / 2},${top}`)
-            .attr("cx", left + (right - left) / 2)
-            .attr("cy", top + (bottom - top) / 2);
-    }
-
-    function updateGroup(selected: any) {
-        // const current = selected.node().getBBox();
         d3.selectAll(`[id="${selected.node().id}"] > *`).each(function () {
             // @ts-ignore
             const item = d3.select(this);
+            const itemBBox = item.node().getBBox();
+            const newScaling = {
+                t: (itemBBox.y - current.y) * sy + s.t,
+                b: ((itemBBox.y + itemBBox.height) - (current.y + current.height)) * sy + s.b,
+                l: (itemBBox.x - current.x) * sx + s.l,
+                r: ((itemBBox.x + itemBBox.width) - (current.x + current.width)) * sx + s.r,
+            }
+            console.log(newScaling);
 
-            // const t = item.y * scale(current.y, top);
-            // const b = (item.y + item.height) * scale(current.y + current.height, bottom);
-            // const l = item.x * scale(current.x, left);
-            // const r = (item.x + item.width) * scale(current.x + current.width, right);
-
-            updateShapes(item);
+            updateShapes(item, newScaling);
         });
     }
-
-
 }
