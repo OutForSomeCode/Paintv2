@@ -1,24 +1,26 @@
 import YAML from 'yaml'
-import {Items} from "../shapes/Items";
-import {Circle} from "../shapes/Circle";
-import {Square} from "../shapes/Square";
-import {Rectangle} from "../shapes/Ractangle";
-import {Triangle} from "../shapes/Triangle";
-import {Shape} from "../shapes/Shape";
-import {CSSProperties} from "react";
+import { Items } from "../shapes/Items";
+import { Circle } from "../shapes/Circle";
+import { Square } from "../shapes/Square";
+import { Rectangle } from "../shapes/Ractangle";
+import { Triangle } from "../shapes/Triangle";
+import { Shape } from "../shapes/Shape";
+import { CSSProperties } from "react";
 // @ts-ignore
 import *  as scanf from 'sscanf'
-import {SaveVisitor} from "../visitor/SaveVisitor";
-import {IShapeGroup} from "../shapes/IShapeGroup";
-import {Group} from "../shapes/Group";
-import {Elliptic} from "../shapes/Elliptic";
+import { SaveVisitor } from "../visitor/SaveVisitor";
+import { IShapeGroup } from "../shapes/IShapeGroup";
+import { Group } from "../shapes/Group";
+import { Elliptic } from "../shapes/Elliptic";
 
 
 let styling: CSSProperties = {
     stroke: "black",
     fill: "#cccccc"
 }
-
+/**
+ * Handels file IO
+ */
 class FileIO {
     // https://eemeli.org/yaml/#working-with-anchors
     private static _instance: FileIO;
@@ -33,6 +35,9 @@ class FileIO {
         return FileIO._instance;
     }
 
+    /**
+     * Load data from localStorage
+     */
     public Load() {
         const src = localStorage.getItem('Draw');
         if (src == null) return;
@@ -48,6 +53,10 @@ class FileIO {
         }
     }
 
+    /**
+     * Create group from data
+     * @param group inputdata from localstorage
+     */
     private CreateGroup(group: any) {
         const list: IShapeGroup[] = [];
         for (const a of group.Group) {
@@ -67,6 +76,10 @@ class FileIO {
         return kaas
     }
 
+    /**
+     * Create shape from data
+     * @param shape inputdata from localstorage
+     */
     private CreateShape(shape: any) {
         console.log(shape)
         let parsedData;
@@ -93,6 +106,9 @@ class FileIO {
         return new Shape(type, parsedData[0], parsedData[1], parsedData[2], parsedData[3], styling)
     }
 
+    /**
+     * Save to localstorage
+     */
     public Save() {
         const doc = new YAML.Document();
         const save = new SaveVisitor();
@@ -115,4 +131,4 @@ class FileIO {
 
 }
 
-export {FileIO}
+export { FileIO }
