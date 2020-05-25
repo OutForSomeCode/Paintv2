@@ -4,11 +4,13 @@ import {G} from "../components/G";
 import {IShapeGroup} from "./IShapeGroup";
 import {IVisitor} from "../visitor/IVisitor";
 import {Vector2} from "../utility/Vector2";
+import {BBox} from "../utility/BBox";
 
 const uuid = require('react-uuid');
 
 class Group implements IShapeGroup {
     private readonly _uuid: any;
+    private _bbox: BBox = new BBox(0, 0, 0, 0);
     private _items: IShapeGroup[] = [];
     private _itemInstance = Items.getInstance();
 
@@ -26,9 +28,28 @@ class Group implements IShapeGroup {
     }
 
     updatePosition(translation: Vector2): void {
+        this._bbox.updatePosition(translation);
         this._items.forEach((item: IShapeGroup) => {
             item.updatePosition(translation);
         })
+    }
+
+    updateSize(scale: Vector2, bbox: any) {
+        this._items.forEach((item: IShapeGroup) => {
+            const itemBBox = item.getObjectData().bbox;
+            const newBbox = new BBox(
+                (itemBBox.top - this._bbox.top) * scale.y + bbox.top,
+                (itemBBox.bottom - this._bbox.bottom) * scale.y + bbox.bottom,
+                (itemBBox.left - this._bbox.left) * scale.x + bbox.left,
+                (itemBBox.right - this._bbox.right) * scale.x + bbox.right,
+            );
+            item.updateSize(scale, newBbox);
+        });
+        this._bbox = bbox;
+    }
+
+    updateBBox(bbox: BBox) {
+        this._bbox = bbox;
     }
 
     add(uuids: any[]) {
@@ -49,7 +70,8 @@ class Group implements IShapeGroup {
     getObjectData(): any {
         return {
             id: this._uuid,
-            items: this._items
+            items: this._items,
+            bbox: this._bbox
         }
     }
 }

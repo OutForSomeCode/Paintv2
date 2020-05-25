@@ -1,19 +1,17 @@
 import React, {CSSProperties} from "react";
 import {Rect} from "../components/Rect";
 import {IShape} from "./IShape";
-import {Vector2} from "../utility/Vector2";
+import {BBox} from "../utility/BBox";
 
 class Rectangle implements IShape {
-    draw(index: number, CenterPos: Vector2,  size: Vector2, style: CSSProperties, inGroup: boolean, callback: () => void) {
-        let offsetX = size.x / 2;
-        let offsetY = size.y / 2;
+    draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void) {
         return <Rect
             key={index}
             id={index}
-            x={CenterPos.x - offsetX}
-            y={CenterPos.y - offsetY}
-            width={size.x}
-            height={size.y}
+            x={bbox.x}
+            y={bbox.y}
+            width={bbox.width}
+            height={bbox.height}
             style={style}
             ingroup={inGroup}
             update={callback}

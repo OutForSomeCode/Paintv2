@@ -13,7 +13,7 @@ class Canvas extends React.Component<any, any> {
     private _update = this.props.shapeUpdate;
 
     componentDidMount(): void {
-        SelectDrag(this);
+        SelectDrag(this, this._update);
     }
 
     addShape = (event: { clientX: number; clientY: number; }): any => {

@@ -2,21 +2,22 @@ import React, {CSSProperties} from "react";
 import {Polygon} from "../components/Polygon";
 import {IShape} from "./IShape";
 import {Vector2} from "../utility/Vector2";
+import {BBox} from "../utility/BBox";
 
 class Triangle implements IShape {
-    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean, callback: () => void) {
-        let plb = [CenterPos.x + (size.x / 2), CenterPos.y + (size.y / 2)];
-        let prb = [CenterPos.x - (size.x / 2), CenterPos.y + (size.y / 2)];
-        let ptm = [CenterPos.x, CenterPos.y - (size.y / 2)];
+    draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void) {
+        let plb = [bbox.left, bbox.bottom];
+        let prb = [bbox.right, bbox.bottom];
+        let ptm = [bbox.cx, bbox.top];
         let t = [plb, prb, ptm];
         return <Polygon
             key={index}
             id={index}
             points={t.toString()}
-            cx={CenterPos.x}
-            cy={CenterPos.y}
-            width={size.x}
-            height={size.y}
+            cx={bbox.cx}
+            cy={bbox.cy}
+            width={bbox.width}
+            height={bbox.height}
             style={style}
             ingroup={inGroup}
             update={callback}

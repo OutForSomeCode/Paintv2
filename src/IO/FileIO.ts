@@ -1,6 +1,5 @@
 import YAML from 'yaml'
 import {Items} from "../shapes/Items";
-import {Scalar, YAMLMap, YAMLSeq, Pair} from "yaml/types";
 import {Circle} from "../shapes/Circle";
 import {Square} from "../shapes/Square";
 import {Rectangle} from "../shapes/Ractangle";
@@ -10,9 +9,9 @@ import {CSSProperties} from "react";
 // @ts-ignore
 import *  as scanf from 'sscanf'
 import {SaveVisitor} from "../visitor/SaveVisitor";
-import {IShape} from "../shapes/IShape";
 import {IShapeGroup} from "../shapes/IShapeGroup";
 import {Group} from "../shapes/Group";
+import {Elliptic} from "../shapes/Elliptic";
 
 
 let styling: CSSProperties = {
@@ -39,7 +38,7 @@ class FileIO {
         if (src == null) return;
         const doc = YAML.parse(src)
 
-        console.log(YAML.parse(src, {keepNodeTypes: false, keepCstNodes: true}))
+        Items.getInstance().itemArray.length = 0;
 
         for (const a of doc) {
             if (a.Group)
@@ -75,6 +74,9 @@ class FileIO {
         if (shape.Circle) {
             type = new Circle()
             parsedData = scanf(shape.Circle, "%f, %f, %f, %f");
+        } else if (shape.Elliptic) {
+            type = new Elliptic()
+            parsedData = scanf(shape.Elliptic, "%f, %f, %f, %f")
         } else if (shape.Square) {
             type = new Square()
             parsedData = scanf(shape.Square, "%f, %f, %f, %f");

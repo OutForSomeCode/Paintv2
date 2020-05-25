@@ -1,17 +1,17 @@
 import React, {CSSProperties} from "react";
 import {Ellipse} from "../components/Ellipse";
 import {IShape} from "./IShape";
-import {Vector2} from "../utility/Vector2";
+import {BBox} from "../utility/BBox";
 
 class Elliptic implements IShape {
-    draw(index: number, CenterPos: Vector2, size: Vector2, style: CSSProperties, inGroup: boolean, callback: () => void) {
+    draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void) {
         return <Ellipse
             key={index}
             id={index}
-            cx={CenterPos.x}
-            cy={CenterPos.y}
-            rx={size.x / 2}
-            ry={size.y / 2}
+            cx={bbox.cx}
+            cy={bbox.cy}
+            rx={bbox.width / 2}
+            ry={bbox.height / 2}
             style={style}
             ingroup={inGroup}
             update={callback}
