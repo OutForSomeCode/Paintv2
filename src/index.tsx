@@ -12,11 +12,6 @@ import {ShapeStyleInput} from "./controls/ShapeStyleInput";
 import IOMenu from "./controls/SaveLoad";
 import {Canvas} from "./components/Canvas";
 import {IShapeGroup} from "./shapes/IShapeGroup";
-import {Group} from "./shapes/Group";
-import {Shape} from "./shapes/Shape";
-import {Square} from "./shapes/Square";
-import {Circle} from "./shapes/Circle";
-import {SharedShapeData} from "./shapes/SharedShapeData";
 import ContextMenu from "./controls/ContextMenu";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -48,16 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function App() {
     const itemsInstance = Items.getInstance();
-
-    // itemsInstance.add(new Group([
-    //     new Shape(new Circle(), 50, 50, 50, 50, SharedShapeData.styling),
-    //     new Shape(new Square(), 100, 100, 50, 50, SharedShapeData.styling),
-    //     new Group([
-    //         new Shape(new Circle(), 50,100, 50,50, SharedShapeData.styling),
-    //         new Shape(new Square(), 100, 150, 50, 50, SharedShapeData.styling)
-    //     ])
-    // ]));
-
     const classes = useStyles();
     const [shapeArray, setShapes] = React.useState({items: itemsInstance.itemArray});
 
@@ -74,7 +59,7 @@ function App() {
                         <History shapeUpdate={update}/>
                         <ShapeSelect/>
                         <ShapeSizeInput/>
-                        <ShapeStyleInput/>
+                        <ShapeStyleInput shapeUpdate={update}/>
                     </Paper>
                 </Grid>
             </Grid>

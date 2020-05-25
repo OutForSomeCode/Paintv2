@@ -1,7 +1,6 @@
 import React, {CSSProperties} from "react";
 import {Polygon} from "../components/Polygon";
 import {IShape} from "./IShape";
-import {Vector2} from "../utility/Vector2";
 import {BBox} from "../utility/BBox";
 
 class Triangle implements IShape {

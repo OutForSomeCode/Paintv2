@@ -46,7 +46,7 @@ class Shape implements IShapeGroup {
             id: this._uuid,
             bbox: this._bbox,
             style: this._styling,
-            strategy: this._strategy.getType()
+            strategy: this._strategy
         };
     }
 
