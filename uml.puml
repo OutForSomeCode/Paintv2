@@ -1,0 +1,252 @@
+@startuml
+interface ICommand {
+    +execute(): boolean
+    +undo(): void
+}
+class Vector2 {
+    +x: number
+    +y: number
+    +toString(): string
+}
+class BBox {
+    +x: number
+    +cx: number
+    +y: number
+    +cy: number
+    +top: number
+    +bottom: number
+    +left: number
+    +right: number
+    +height: number
+    +width: number
+    +updatePosition(translation: Vector2): void
+}
+interface IShape {
+    +draw(index: number, bbox: BBox, style: any, inGroup: boolean, callback: () => void): any
+    +getType(): string
+}
+class Commands {
+    -_commandArray: ICommand[]
+    -_undoneCommands: ICommand[]
+    -_isRedo: boolean
+    +commandArray: ICommand[]
+    +commandArray: ICommand[]
+    +push: (command: ICommand) => void
+    +undo: () => void
+    +redo: () => void
+    -{static} _instance: Commands
+    +{static} getInstance(): Commands
+}
+class CommandUpdatePosition implements ICommand {
+    -_items: Items
+    -_shape: IShapeGroup
+    -_oldPos: Vector2
+    -_newPos: Vector2
+    +execute: () => boolean
+    +undo: () => void
+}
+class CommandResizeSelected implements ICommand {
+    -_items: Items
+    -_shape: IShapeGroup
+    -_newData: BBox
+    -_oldData: BBox
+    -_oldScale: Vector2
+    -_newScale: Vector2
+    +scale: (oldSize: number, newSize: number) => number
+    +execute: () => boolean
+    +undo: () => void
+}
+class G {
+    +componentDidMount(): void
+    +componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void
+    +enableDragging(inGroup: boolean): void
+    +render(): Element
+}
+class Group implements IShapeGroup {
+    -_uuid: any
+    -_bbox: BBox
+    -_items: IShapeGroup[]
+    -_itemInstance: Items
+    +draw: (inGroup: boolean, callback: () => void) => any
+    +updatePosition(translation: Vector2): void
+    +updateSize(scale: Vector2, bbox: any): void
+    +updateBBox(bbox: BBox): void
+    +add(uuids: any[]): void
+    +remove(): void
+    +acceptVisitor(v: IVisitor): void
+    +getObjectData(): any
+}
+class Ellipse {
+    +componentDidMount(): void
+    +componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void
+    +enableDragging(inGroup: boolean): void
+    +render(): Element
+}
+class Elliptic implements IShape {
+    +draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void): Element
+    +getType(): string
+}
+class Rect {
+    +componentDidMount(): void
+    +componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void
+    +enableDragging(inGroup: boolean): void
+    +render(): Element
+}
+class Rectangle implements IShape {
+    +draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void): Element
+    +getType(): string
+}
+class Shape implements IShapeGroup {
+    -_uuid: any
+    -_strategy: IShape
+    -_bbox: BBox
+    -_styling: CSSProperties
+    +draw: (inGroup: boolean, callback: any) => any
+    +changeStrategy(strategy: IShape): void
+    +updatePosition: (translation: Vector2) => void
+    +updateSize(scale: Vector2, bbox: any): void
+    +getObjectData(): any
+    +acceptVisitor(v: IVisitor): void
+}
+interface IVisitor {
+    +visitShape(s: Shape): void
+    +visitGroup(g: Group): void
+}
+interface IShapeGroup {
+    +draw(inGroup: boolean, callback: () => void): any
+    +getObjectData(): any
+    +acceptVisitor(v: IVisitor): void
+    +updatePosition(translation: Vector2): void
+    +updateSize(scale: Vector2, bbox: any): void
+}
+class Items {
+    -_itemArray: IShapeGroup[]
+    -_selectedItemsUuids: any[]
+    +itemArray: IShapeGroup[]
+    +itemArray: IShapeGroup[]
+    +selectedItemsUuids: any[]
+    +selectedItemsUuids: any[]
+    +add: (items: IShapeGroup[]) => void
+    +remove: (uuid: any) => IShapeGroup[]
+    +get: (uuid: any) => IShapeGroup
+    -{static} _instance: Items
+    +{static} getInstance(): Items
+}
+class CommandCreateGroup implements ICommand {
+    -_itemInstance: Items
+    -_uuid: any
+    -_selection: any[]
+    +execute(): boolean
+    +undo(): void
+}
+class CommandCreateShape implements ICommand {
+    -_shapeInstance: Items
+    -_shape: Shape
+    +execute(): boolean
+    +undo(): void
+}
+class CommandDeleteSelected implements ICommand {
+    -_itemInstance: Items
+    -_selection: any[]
+    -_deletedItems: IShapeGroup[]
+    +execute(): boolean
+    +undo(): void
+}
+class CommandRemoveGroup implements ICommand {
+    -_itemInstance: Items
+    -_selection: any[]
+    -_removedGroups: any[]
+    +execute(): boolean
+    +undo(): void
+}
+class Decorator implements IShape {
+    -_shape: IShape
+    +draw(index: number, bbox: BBox, style: any, inGroup: boolean, callback: () => void): any
+    +getType(): string
+}
+class Circle implements IShape {
+    +draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void): Element
+    +getType(): string
+}
+class SharedShapeData {
+    +{static} type: IShape
+    +{static} height: number
+    +{static} width: number
+    +{static} context: string
+    +{static} styling: CSSProperties
+}
+class DecoratorChangeColor extends Decorator {
+    +draw(index: number, bbox: BBox, style: any, inGroup: boolean, callback: () => void): any
+}
+class Square implements IShape {
+    +draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void): Element
+    +getType(): string
+}
+class Polygon {
+    +componentDidMount(): void
+    +componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void
+    +enableDragging(inGroup: boolean): void
+    +render(): Element
+}
+class Triangle implements IShape {
+    +draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void): Element
+    +getType(): string
+}
+class SaveVisitor implements IVisitor {
+    -currentGroup: YAMLSeq
+    +visitGroup(g: Group): void
+    +visitShape(s: Shape): void
+    +buildTree(): YAMLSeq
+}
+class FileIO {
+    +Load(): void
+    -CreateGroup(group: any): Group
+    -CreateShape(shape: any): Shape
+    +Save(): void
+    -{static} _instance: FileIO
+    +{static} getInstance(): FileIO
+}
+BBox *-- Vector2
+IShape *-- BBox
+Commands *-- ICommand
+CommandUpdatePosition *-- Items
+CommandUpdatePosition *-- IShapeGroup
+CommandUpdatePosition *-- Vector2
+CommandResizeSelected *-- Items
+CommandResizeSelected *-- IShapeGroup
+CommandResizeSelected *-- BBox
+CommandResizeSelected *-- Vector2
+Group *-- BBox
+Group *-- IShapeGroup
+Group *-- Items
+Group *-- Vector2
+Group *-- IVisitor
+Elliptic *-- BBox
+Rectangle *-- BBox
+Shape *-- IShape
+Shape *-- BBox
+Shape *-- Vector2
+Shape *-- IVisitor
+IVisitor *-- Shape
+IVisitor *-- Group
+IShapeGroup *-- IVisitor
+IShapeGroup *-- Vector2
+Items *-- IShapeGroup
+CommandCreateGroup *-- Items
+CommandCreateShape *-- Items
+CommandCreateShape *-- Shape
+CommandDeleteSelected *-- Items
+CommandDeleteSelected *-- IShapeGroup
+CommandRemoveGroup *-- Items
+Decorator *-- IShape
+Decorator *-- BBox
+Circle *-- BBox
+SharedShapeData *-- IShape
+DecoratorChangeColor *-- BBox
+Square *-- BBox
+Triangle *-- BBox
+SaveVisitor *-- Group
+SaveVisitor *-- Shape
+FileIO *-- Group
+FileIO *-- Shape
+@enduml

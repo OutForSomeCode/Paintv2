@@ -36,7 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "doc": "typedoc --out docs --mode file src"
+    "doc": "typedoc --out docs --mode file src",
+    "uml": "tplant -C --input src/**/*.ts --output uml.puml"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,6 +56,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
+    "tplant": "^2.3.3",
     "typedoc": "^0.17.7"
   }
 }
