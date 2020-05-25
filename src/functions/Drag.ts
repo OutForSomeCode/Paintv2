@@ -8,11 +8,20 @@ import Resize from "./Resize";
 
 const d3 = require("d3");
 
+/**
+ * drag functionality for shapes and groups
+ * @param comp: react component
+ * @param update: callback to the update function in index.tsx
+ * @constructor
+ */
 export default function Drag(comp: React.Component, update: () => void) {
     const node: any = findDOMNode(comp);
     const commands = Commands.getInstance();
     let position = new Vector2(0, 0);
 
+    /**
+     * remove selected classes, resize points, disable context menu
+     */
     function startDragging() {
         d3.selectAll(".selected").classed("selected", false);
         d3.selectAll(".resizePoint").remove();
@@ -22,6 +31,9 @@ export default function Drag(comp: React.Component, update: () => void) {
         d3.select(this).raise().classed("selected", true);
     }
 
+    /**
+     * while dragging apply translation
+     */
     function dragging() {
         const translate = `translate(${d3.event.x}, ${d3.event.y})`;
         position.x = d3.event.x;
@@ -31,6 +43,9 @@ export default function Drag(comp: React.Component, update: () => void) {
         d3.select(this).attr('transform', translate);
     }
 
+    /**
+     * when done with dragging, add this action to the commands list (undo / redo)
+     */
     function endDragging() {
         if (position.x >= 1 || position.x <= -1 || position.y >= 1 || position.y <= -1) //prevent "empty" commands in the history que
             commands.push(new CommandUpdatePosition(node.id, position));
@@ -42,6 +57,9 @@ export default function Drag(comp: React.Component, update: () => void) {
         }
     }
 
+    /**
+     * prevent default right click menu
+     */
     function preventClick() {
         d3.event.stopPropagation(); //prevent new shapes from being added when a shape is clicked
     }
@@ -55,6 +73,10 @@ export default function Drag(comp: React.Component, update: () => void) {
         .on("end", endDragging);
 
     attach(d3.select(node));
+
+    /**
+     * custom right click menu
+     */
     d3.select(node)
         .on("click", preventClick)
         .on("contextmenu", function () {

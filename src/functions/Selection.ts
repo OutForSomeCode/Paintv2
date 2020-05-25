@@ -2,6 +2,10 @@ import {Items} from "../shapes/Items";
 
 const d3 = require("d3");
 
+/**
+ * get the selected items from the canvas and update the selected list in Items._itemsInstance
+ * @constructor
+ */
 export default function Selection() {
     const itemsInstance = Items.getInstance();
     let selected: any[] = [];

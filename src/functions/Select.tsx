@@ -6,10 +6,19 @@ import Resize from "./Resize";
 
 const d3 = require("d3");
 
+/**
+ * drag select
+ * @param comp: react component
+ * @param update: callback to the update function in index.tsx
+ * @constructor
+ */
 export default function Select(comp: React.Component, update: () => void) {
     const node: any = findDOMNode(comp);
     let startPos = {x: 0, y: 0};
 
+    /**
+     * remove selected class and resizing drag points when dragging
+     */
     function startDragging() {
         d3.selectAll(".selected").classed("selected", false);
         d3.selectAll(".resizePoint").remove();
@@ -25,6 +34,9 @@ export default function Select(comp: React.Component, update: () => void) {
             .attr("height", 0)
     }
 
+    /**
+     * while dragging check if shapes fall within the selection box and mark(add selected class) them
+     */
     function dragging() {
         let width = d3.event.x - startPos.x;
         let height = d3.event.y - startPos.y;
@@ -53,6 +65,9 @@ export default function Select(comp: React.Component, update: () => void) {
         });
     }
 
+    /**
+     * remove the selection box, and show resizing drag points
+     */
     function endDragging() {
         d3.select("#selectionField").remove();
         if (Selection() === 1) {
