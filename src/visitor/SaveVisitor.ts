@@ -19,7 +19,7 @@ class SaveVisitor implements IVisitor {
 
     visitShape(s: Shape): void {
         const shape = s.getObjectData();
-        let kaas = new Pair(shape.strategy, sprintf(
+        let kaas = new Pair(shape.strategy.getType(), sprintf(
             "%f, %f, %f, %f",
             shape.bbox.cx,
             shape.bbox.cy,

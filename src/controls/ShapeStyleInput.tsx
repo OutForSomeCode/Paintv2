@@ -4,8 +4,16 @@ import {SketchPicker} from 'react-color';
 import {Button, ButtonGroup} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import {SharedShapeData} from "../shapes/SharedShapeData";
+import Selection from "../functions/Selection";
+import {Shape} from "../shapes/Shape";
+import {DecoratorChangeColor} from "../Decorator/DecoratorChangeColor";
+import {Items} from "../shapes/Items";
 
-class ShapeStyleInput extends React.Component {
+const d3 = require('d3');
+
+class ShapeStyleInput extends React.Component<any, any> {
+    private _itemsInstance = Items.getInstance();
+    private _update = this.props.shapeUpdate;
     state = {
         background: '#cccccc',
         displayColorPicker: false,
@@ -25,6 +33,12 @@ class ShapeStyleInput extends React.Component {
 
     handleClose = () => {
         this.setState({displayColorPicker: false})
+        if (Selection() === 1) {
+            const item = d3.select(".selected").node().id;
+            const shape = this._itemsInstance.get(item) as Shape;
+            shape.changeStrategy(new DecoratorChangeColor(shape.getObjectData().strategy));
+            this._update();
+        }
     };
 
     render() {

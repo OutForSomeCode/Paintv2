@@ -17,7 +17,7 @@ class Ellipse extends React.Component<any, any> {
     }
 
     render() {
-        return <ellipse {...this.props}/>;
+        return <ellipse {...this.props}/>
     }
 }
 
