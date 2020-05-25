@@ -1,6 +1,4 @@
-PROJECT_NAME = "Rigs of Rods"
-PROJECT_NUMBER = "0.4.8.0"
-PROJECT_BRIEF = "Soft-body Physics Simulation"
+PROJECT_NAME = "Paint V2"
 SHOW_FILES = YES
 EXTRACT_ALL = YES
 EXTRACT_PRIVATE = YES
