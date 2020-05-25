@@ -21,7 +21,6 @@ let styling: CSSProperties = {
 class FileIO {
     // https://eemeli.org/yaml/#working-with-anchors
     private static _instance: FileIO;
-    private _root = new YAMLSeq();
 
     private constructor() {
     }
@@ -31,10 +30,6 @@ class FileIO {
             FileIO._instance = new FileIO();
         }
         return FileIO._instance;
-    }
-
-    public getRoot(): any{
-        return this._root;
     }
 
     public Load() {
@@ -78,7 +73,6 @@ class FileIO {
     public Save() {
         const doc = new YAML.Document();
         const save = new SaveVisitor();
-        this._root = new YAMLSeq();
 
         Items.getInstance().itemArray.forEach(
             (item) => {
@@ -86,8 +80,10 @@ class FileIO {
             }
         );
 
+        console.log(save.buildTree())
+
         // @ts-ignore
-        doc.contents = this._root;
+        doc.contents = save.buildTree();
 
         console.log();
         localStorage.setItem('Draw', String(doc));
