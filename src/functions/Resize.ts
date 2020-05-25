@@ -6,6 +6,11 @@ import {Items} from "../shapes/Items";
 
 const d3 = require("d3");
 
+/**
+ * resize the selected shape or group by using the 4 drag points on the corners
+ * @param update: callback to the update function in index.tsx
+ * @constructor
+ */
 export default function Resize(update: () => void) {
     const svg = d3.select("#canvas");
     const commands = Commands.getInstance();
@@ -224,12 +229,18 @@ export default function Resize(update: () => void) {
         });
     }
 
+    /**
+     * when done with dragging to resize, add this action to the commands list (undo / redo)
+     */
     function updateShapeData() {
         commands.push(new CommandResizeSelected(d3.select(".selected").node().id, selectedShapeBBox));
         update();
         isDragStart = true;
     }
 
+    /**
+     * update all groups there bbox data on drag start
+     */
     function updateAllGroupBBox() {
         d3.selectAll("#canvas > g").each(function () {
             // @ts-ignore

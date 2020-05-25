@@ -3,6 +3,9 @@ import {Polygon} from "../components/Polygon";
 import {IShape} from "./IShape";
 import {BBox} from "../utility/BBox";
 
+/**
+ * triangle strategy
+ */
 class Triangle implements IShape {
     draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void) {
         let plb = [bbox.left, bbox.bottom];

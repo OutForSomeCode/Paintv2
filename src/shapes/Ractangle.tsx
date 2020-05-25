@@ -3,6 +3,9 @@ import {Rect} from "../components/Rect";
 import {IShape} from "./IShape";
 import {BBox} from "../utility/BBox";
 
+/**
+ * rectangle strategy
+ */
 class Rectangle implements IShape {
     draw(index: number, bbox: BBox, style: CSSProperties, inGroup: boolean, callback: () => void) {
         return <Rect
