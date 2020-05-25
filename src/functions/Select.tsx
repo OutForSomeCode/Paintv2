@@ -6,7 +6,7 @@ import Resize from "./Resize";
 
 const d3 = require("d3");
 
-export default function Select(comp: React.Component) {
+export default function Select(comp: React.Component, update: () => void) {
     const node: any = findDOMNode(comp);
     let startPos = {x: 0, y: 0};
 
@@ -56,7 +56,7 @@ export default function Select(comp: React.Component) {
     function endDragging() {
         d3.select("#selectionField").remove();
         if (Selection() === 1) {
-            Resize();
+            Resize(update);
         }
     }
 

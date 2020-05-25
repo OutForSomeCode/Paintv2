@@ -38,7 +38,7 @@ export default function Drag(comp: React.Component, update: () => void) {
         d3.select(this).attr('transform', null);
         update();
         if (Selection() === 1) {
-            Resize();
+            Resize(update);
         }
     }
 

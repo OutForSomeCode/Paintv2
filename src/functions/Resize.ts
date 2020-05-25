@@ -1,17 +1,26 @@
+import {Commands} from "../Commands/Commands";
+import {CommandResizeSelected} from "../Commands/CommandResizeSelected";
+import {BBox} from "../utility/BBox";
+import {Group} from "../shapes/Group";
+import {Items} from "../shapes/Items";
+
 const d3 = require("d3");
 
-export default function Resize() {
+export default function Resize(update: () => void) {
     const svg = d3.select("#canvas");
+    const commands = Commands.getInstance();
+    const items = Items.getInstance();
     const selectedShapeBBox = d3.select(".selected").node().getBBox();
     const padding = 7;
+    let isDragStart = true;
 
     /**
      * setup the drag calls for the 4 drag points
      */
-    const dragLT = d3.drag().on("drag", dragPointLT);
-    const dragRT = d3.drag().on("drag", dragPointRT);
-    const dragLB = d3.drag().on("drag", dragPointLB);
-    const dragRB = d3.drag().on("drag", dragPointRB);
+    const dragLT = d3.drag().on("drag", dragPointLT).on("end", updateShapeData);
+    const dragRT = d3.drag().on("drag", dragPointRT).on("end", updateShapeData);
+    const dragLB = d3.drag().on("drag", dragPointLB).on("end", updateShapeData);
+    const dragRB = d3.drag().on("drag", dragPointRB).on("end", updateShapeData);
 
     /**
      * top: y coordinate of the element that's being resized
@@ -25,8 +34,8 @@ export default function Resize() {
     let right = selectedShapeBBox.width < 0 ? selectedShapeBBox.x : selectedShapeBBox.x + selectedShapeBBox.width;
 
     /**
-     * sx: scale x coordinate
-     * sy: scale y coordinate
+     * sx: scale x factor
+     * sy: scale y factor
      */
     let sx = 1;
     let sy = 1;
@@ -64,7 +73,7 @@ export default function Resize() {
         .call(dragRB);
 
     /**
-     * each drag point has its own function to update the coordinates an scale accordingly
+     * each drag point has its own function to update the coordinates and scale accordingly
      */
     function dragPointLT() {
         sx = scale(right - left, right - d3.event.x);
@@ -124,7 +133,11 @@ export default function Resize() {
         pointLB.attr("cx", left).attr("cy", bottom);
         pointRB.attr("cx", right).attr("cy", bottom);
 
-        updateShapes(d3.select(".selected"), { t: top, b: bottom, l: left, r: right });
+        if (isDragStart) {
+            updateAllGroupBBox();
+            isDragStart = false;
+        }
+        updateShapes(d3.select(".selected"), new BBox(top, bottom, left, right));
     }
 
     /**
@@ -132,7 +145,7 @@ export default function Resize() {
      * @param selected: current shape that's being updated
      * @param bbox: the new size of the bounding box
      */
-    function updateShapes(selected: any, bbox: { t: number, b: number, l: number, r: number }) {
+    function updateShapes(selected: any, bbox: BBox) {
         switch (selected.node().tagName) {
             case "ellipse":
                 updateEllipse(selected, bbox);
@@ -157,12 +170,12 @@ export default function Resize() {
      * @param selected: the selected ellipse
      * @param bbox: the new size of the bounding box
      */
-    function updateEllipse(selected: any, bbox: { t: number, b: number, l: number, r: number }) {
+    function updateEllipse(selected: any, bbox: BBox) {
         selected
-            .attr("rx", (bbox.r - bbox.l) / 2)
-            .attr("ry", (bbox.b - bbox.t) / 2)
-            .attr("cx", bbox.l + (bbox.r - bbox.l) / 2)
-            .attr("cy", bbox.t + (bbox.b - bbox.t) / 2)
+            .attr("rx", bbox.width / 2)
+            .attr("ry", bbox.height / 2)
+            .attr("cx", bbox.cx)
+            .attr("cy", bbox.cy)
     }
 
     /**
@@ -170,12 +183,12 @@ export default function Resize() {
      * @param selected: the selected rectangle
      * @param bbox: the new size of the bounding box
      */
-    function updateRect(selected: any, bbox: { t: number, b: number, l: number, r: number }) {
+    function updateRect(selected: any, bbox: BBox) {
         selected
-            .attr("width", bbox.r - bbox.l)
-            .attr("height", bbox.b - bbox.t)
-            .attr("x", bbox.l)
-            .attr("y", bbox.t);
+            .attr("width", bbox.width)
+            .attr("height", bbox.height)
+            .attr("x", bbox.left)
+            .attr("y", bbox.top);
     }
 
     /**
@@ -183,11 +196,11 @@ export default function Resize() {
      * @param selected: the selected polygon
      * @param bbox: the new size of the bounding box
      */
-    function updatePolygon(selected: any, bbox: { t: number, b: number, l: number, r: number }) {
+    function updatePolygon(selected: any, bbox: BBox) {
         selected
-            .attr("points", `${bbox.l},${bbox.b} ${bbox.r},${bbox.b} ${bbox.l + (bbox.r - bbox.l) / 2},${bbox.t}`)
-            .attr("cx", bbox.l + (bbox.r - bbox.l) / 2)
-            .attr("cy", bbox.t + (bbox.b - bbox.t) / 2);
+            .attr("points", `${bbox.left},${bbox.bottom} ${bbox.right},${bbox.bottom} ${bbox.cx},${bbox.top}`)
+            .attr("cx", bbox.cx)
+            .attr("cy", bbox.cy);
     }
 
     /**
@@ -195,21 +208,41 @@ export default function Resize() {
      * @param selected: the selected group
      * @param bbox: the new size of the bounding box
      */
-    function updateGroup(selected: any, bbox: { t: number, b: number, l: number, r: number }) {
+    function updateGroup(selected: any, bbox: BBox) {
         const groupBBox = selected.node().getBBox();
         d3.selectAll(`[id="${selected.node().id}"] > *`).each(function () {
             // @ts-ignore
             const item = d3.select(this);
             const itemBBox = item.node().getBBox();
-            const newBbox = {
-                t: (itemBBox.y - groupBBox.y) * sy + bbox.t,
-                b: ((itemBBox.y + itemBBox.height) - (groupBBox.y + groupBBox.height)) * sy + bbox.b,
-                l: (itemBBox.x - groupBBox.x) * sx + bbox.l,
-                r: ((itemBBox.x + itemBBox.width) - (groupBBox.x + groupBBox.width)) * sx + bbox.r,
-            }
-            console.log(newBbox);
-
+            const newBbox = new BBox(
+                (itemBBox.y - groupBBox.y) * sy + bbox.top,
+                ((itemBBox.y + itemBBox.height) - (groupBBox.y + groupBBox.height)) * sy + bbox.bottom,
+                (itemBBox.x - groupBBox.x) * sx + bbox.left,
+                ((itemBBox.x + itemBBox.width) - (groupBBox.x + groupBBox.width)) * sx + bbox.right,
+            );
             updateShapes(item, newBbox);
+        });
+    }
+
+    function updateShapeData() {
+        commands.push(new CommandResizeSelected(d3.select(".selected").node().id, selectedShapeBBox));
+        update();
+        isDragStart = true;
+    }
+
+    function updateAllGroupBBox() {
+        d3.selectAll("#canvas > g").each(function () {
+            // @ts-ignore
+            const item = d3.select(this).node();
+            const itemBBox = item.getBBox();
+            const g = items.get(item.id) as Group;
+            const bbox = new BBox(
+                itemBBox.y,
+                itemBBox.y + itemBBox.height,
+                itemBBox.x,
+                itemBBox.x + itemBBox.width
+            );
+            g.updateBBox(bbox);
         });
     }
 }

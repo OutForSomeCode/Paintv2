@@ -6,4 +6,5 @@ export interface IShapeGroup {
     getObjectData(): any
     acceptVisitor(v: IVisitor): void;
     updatePosition(translation: Vector2): void;
+    updateSize(scale: Vector2, bbox: any): void;
 }

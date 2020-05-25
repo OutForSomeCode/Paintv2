@@ -1,6 +1,6 @@
-import {Vector2} from "../utility/Vector2";
+import {BBox} from "../utility/BBox";
 
 export interface IShape {
     getType(): string;
-    draw(index: number, cenPos: Vector2, size: Vector2, style: any, inGroup: boolean, callback: () => void): any;
+    draw(index: number, bbox: BBox, style: any, inGroup: boolean, callback: () => void): any;
 }
