@@ -21,10 +21,10 @@ class SaveVisitor implements IVisitor {
         const shape = s.getObjectData();
         let kaas = new Pair(shape.strategy, sprintf(
             "%f, %f, %f, %f",
-            shape.pos.x,
-            shape.pos.y,
-            shape.size.x,
-            shape.size.y
+            shape.bbox.cx,
+            shape.bbox.cy,
+            shape.bbox.width,
+            shape.bbox.height
         ))
         this.currentGroup.items.push(kaas);
     }
