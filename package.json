@@ -1,6 +1,7 @@
 {
   "name": "paintv2",
   "version": "0.1.0",
+  "homepage": "http://outforsomecode.github.io/Paintv2/",
   "private": true,
   "dependencies": {
     "@babel/helper-call-delegate": "^7.8.7",
